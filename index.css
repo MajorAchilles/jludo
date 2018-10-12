@@ -1,0 +1,14 @@
+body {
+    margin: 0x;
+}
+
+.background {
+    height:100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.console {
+    background-color: lightgray;
+}
