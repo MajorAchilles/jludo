@@ -145,6 +145,48 @@ getBoardMask = () => {
     return state;
 }
 
+getSafeZoneMask = () => {
+    const safeZoneMask = [];
+
+    for(let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
+        let row = [];
+        for(let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
+            row.push(false);
+        }
+        safeZoneMask.push(row);
+    }
+
+    let rowIndex = 0;
+    let colIndex = 0;
+
+    // Row 1
+    rowIndex += 2;
+    safeZoneMask[rowIndex][colIndex += 7] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+
+    // Row 2
+    rowIndex += 1;
+    colIndex = 0;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+
+    // Row 3
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 2] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+
+    return safeZoneMask;
+}
+
 const State = {
-    getBoardMask
+    getBoardMask,
+    getSafeZoneMask
 };

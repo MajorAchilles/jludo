@@ -7,13 +7,16 @@ const renderBoard = (context) => {
     const cellHeight = getCellHeight();
     const cellWidth  = getCellWidth();
     const boardMask = getBoardMask();
+    const safeZoneMask = getSafeZoneMask();
 
     let top = 0;
     for(let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
         let left = 0;
         for(let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
             renderCell(context, left, top, cellWidth, cellHeight, getCellColor(boardMask[rowIndex][colIndex]));
-            renderSafeCircle(context, left, top, cellWidth, cellHeight, getCellColor(boardMask[rowIndex][colIndex]));
+            if(safeZoneMask[rowIndex][colIndex]) {
+                renderSafeCircle(context, left, top, cellWidth, cellHeight, getCellColor(boardMask[rowIndex][colIndex]));
+            }
             left += cellWidth;
         }
         top += cellHeight;
@@ -22,16 +25,13 @@ const renderBoard = (context) => {
 
 const renderCell = (context, left, top, width, height, color) => {
     context.beginPath();
-    context.fillStyle = color;
-    context.fillRect(left, top, width, height);
-
-    if (color === CellFillColorMap[CellType.EMPTY]) {
-        return;
-    }
-    context.beginPath();
     context.lineWidth = 1;
     context.strokeStyle = BoundaryColor;
     context.strokeRect(left, top, width, height);
+    
+    context.beginPath();
+    context.fillStyle = color;
+    context.fillRect(left, top, width, height);
 }
 
 const renderSafeCircle = (context, left, top, width, height) => {
