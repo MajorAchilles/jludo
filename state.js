@@ -183,6 +183,69 @@ getSafeZoneMask = () => {
     safeZoneMask[rowIndex][colIndex += 3] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
 
+    // Row 4
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 7] = true;
+
+    // Row 5
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 2] = true;
+    safeZoneMask[rowIndex][colIndex += 5] = true;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+
+    // Row 6
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 2] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 2] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+
+    // Row 7
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 4] = true;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 5] = true;
+
+    // Row 8
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 7] = true;
+
+    // Row 9
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 2] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+
+    // Row 10
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 3] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+
+    // Row 11
+    colIndex = 0;
+    rowIndex+= 1;
+    safeZoneMask[rowIndex][colIndex += 6] = true;
+    safeZoneMask[rowIndex][colIndex += 1] = true;
+
     return safeZoneMask;
 }
 
