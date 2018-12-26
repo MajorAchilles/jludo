@@ -1,9 +1,19 @@
-getBoardMask = () => {
+import {
+    CellType,
+    dimensions
+} from "./constants";
+
+const {
+    ROW_COUNT,
+    COLUMN_COUNT
+} = dimensions;
+
+const getBoardMask = () => {
     const state = [];
 
-    for(let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
-        let row = [];
-        for(let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
+    for (let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
+        const row = [];
+        for (let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
             row.push(CellType.EMPTY);
         }
         state.push(row);
@@ -14,7 +24,7 @@ getBoardMask = () => {
 
     // Row 1
     rowIndex += 2;
-    state[rowIndex][colIndex += 2] = CellType.GREEN; 
+    state[rowIndex][colIndex += 2] = CellType.GREEN;
     state[rowIndex][colIndex += 1] = CellType.GREEN;
     state[rowIndex][colIndex += 1] = CellType.GREEN;
     state[rowIndex][colIndex += 1] = CellType.GREEN;
@@ -50,7 +60,7 @@ getBoardMask = () => {
     state[rowIndex][colIndex += 1] = CellType.BLUE;
     state[rowIndex][colIndex += 1] = CellType.BLUE;
     state[rowIndex][colIndex += 1] = CellType.BLUE;
-    
+
     // Row 4
     rowIndex += 1;
     colIndex = 0;
@@ -63,17 +73,17 @@ getBoardMask = () => {
     state[rowIndex][colIndex += 1] = CellType.BLUE;
     state[rowIndex][colIndex += 1] = CellType.BLUE;
     state[rowIndex][colIndex += 1] = CellType.BLUE;
-    
+
     // Row 5
     rowIndex += 1;
-    colIndex  = 0;
+    colIndex = 0;
     state[rowIndex][colIndex += 2] = CellType.GREEN;
     state[rowIndex][colIndex += 5] = CellType.BLUE;
 
     // Row 6
     rowIndex += 1;
-    colIndex  = 0;
-    state[rowIndex][colIndex += 2] = CellType.GREEN
+    colIndex = 0;
+    state[rowIndex][colIndex += 2] = CellType.GREEN;
     state[rowIndex][colIndex += 1] = CellType.GREEN;
     state[rowIndex][colIndex += 1] = CellType.GREEN;
     state[rowIndex][colIndex += 1] = CellType.GREEN;
@@ -143,14 +153,14 @@ getBoardMask = () => {
 
 
     return state;
-}
+};
 
-getSafeZoneMask = () => {
+const getSafeZoneMask = () => {
     const safeZoneMask = [];
 
-    for(let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
-        let row = [];
-        for(let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
+    for (let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
+        const row = [];
+        for (let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
             row.push(false);
         }
         safeZoneMask.push(row);
@@ -175,7 +185,7 @@ getSafeZoneMask = () => {
 
     // Row 3
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 3] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
     safeZoneMask[rowIndex][colIndex += 2] = true;
@@ -185,19 +195,19 @@ getSafeZoneMask = () => {
 
     // Row 4
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 7] = true;
 
     // Row 5
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 2] = true;
     safeZoneMask[rowIndex][colIndex += 5] = true;
     safeZoneMask[rowIndex][colIndex += 3] = true;
 
     // Row 6
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 2] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
@@ -211,19 +221,19 @@ getSafeZoneMask = () => {
 
     // Row 7
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 4] = true;
     safeZoneMask[rowIndex][colIndex += 3] = true;
     safeZoneMask[rowIndex][colIndex += 5] = true;
 
     // Row 8
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 7] = true;
 
     // Row 9
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 3] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
     safeZoneMask[rowIndex][colIndex += 3] = true;
@@ -233,7 +243,7 @@ getSafeZoneMask = () => {
 
     // Row 10
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 3] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
     safeZoneMask[rowIndex][colIndex += 3] = true;
@@ -242,14 +252,14 @@ getSafeZoneMask = () => {
 
     // Row 11
     colIndex = 0;
-    rowIndex+= 1;
+    rowIndex += 1;
     safeZoneMask[rowIndex][colIndex += 6] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
 
     return safeZoneMask;
-}
+};
 
-const State = {
+export {
     getBoardMask,
     getSafeZoneMask
 };

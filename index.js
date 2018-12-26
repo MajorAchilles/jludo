@@ -1,2 +1,0 @@
-clearCanvas(canvas);
-renderBoard(context);
