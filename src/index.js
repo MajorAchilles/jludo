@@ -3,5 +3,7 @@ import {
     renderBoard
 } from "./renderer";
 
-clearCanvas();
-renderBoard();
+window.onload = () => {
+    clearCanvas();
+    renderBoard();
+};

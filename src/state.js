@@ -39,27 +39,27 @@ const getBoardMask = () => {
     rowIndex += 1;
     colIndex = 0;
     state[rowIndex][colIndex += 2] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
+    // state[rowIndex][colIndex += 1] = CellType.GREEN;
+    // state[rowIndex][colIndex += 1] = CellType.GREEN;
+    state[rowIndex][colIndex += 3] = CellType.GREEN;
     state[rowIndex][colIndex += 2] = CellType.BLUE;
     state[rowIndex][colIndex += 2] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
+    // state[rowIndex][colIndex += 1] = CellType.BLUE;
+    // state[rowIndex][colIndex += 1] = CellType.BLUE;
+    state[rowIndex][colIndex += 3] = CellType.BLUE;
 
     // Row 3
     rowIndex += 1;
     colIndex = 0;
     state[rowIndex][colIndex += 2] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
+    // state[rowIndex][colIndex += 1] = CellType.GREEN;
+    // state[rowIndex][colIndex += 1] = CellType.GREEN;
+    state[rowIndex][colIndex += 3] = CellType.GREEN;
     state[rowIndex][colIndex += 2] = CellType.BLUE;
     state[rowIndex][colIndex += 2] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
+    // state[rowIndex][colIndex += 1] = CellType.BLUE;
+    // state[rowIndex][colIndex += 1] = CellType.BLUE;
+    state[rowIndex][colIndex += 3] = CellType.BLUE;
 
     // Row 4
     rowIndex += 1;
@@ -116,27 +116,27 @@ const getBoardMask = () => {
     rowIndex += 1;
     colIndex = 0;
     state[rowIndex][colIndex += 2] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
+    // state[rowIndex][colIndex += 1] = CellType.RED;
+    // state[rowIndex][colIndex += 1] = CellType.RED;
+    state[rowIndex][colIndex += 3] = CellType.RED;
     state[rowIndex][colIndex += 2] = CellType.RED;
     state[rowIndex][colIndex += 2] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
+    // state[rowIndex][colIndex += 1] = CellType.YELLOW;
+    // state[rowIndex][colIndex += 1] = CellType.YELLOW;
+    state[rowIndex][colIndex += 3] = CellType.YELLOW;
 
     // Row 10
     rowIndex += 1;
     colIndex = 0;
     state[rowIndex][colIndex += 2] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
+    // state[rowIndex][colIndex += 1] = CellType.RED;
+    // state[rowIndex][colIndex += 1] = CellType.RED;
+    state[rowIndex][colIndex += 3] = CellType.RED;
     state[rowIndex][colIndex += 2] = CellType.RED;
     state[rowIndex][colIndex += 2] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
+    // state[rowIndex][colIndex += 1] = CellType.YELLOW;
+    // state[rowIndex][colIndex += 1] = CellType.YELLOW;
+    state[rowIndex][colIndex += 3] = CellType.YELLOW;
 
     rowIndex += 1;
     colIndex = 0;
@@ -177,21 +177,21 @@ const getSafeZoneMask = () => {
     // Row 2
     rowIndex += 1;
     colIndex = 0;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
+    // safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 7] = true;
+    // safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 1] = true;
 
     // Row 3
     colIndex = 0;
     rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 6] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 2] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
+    // safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 1] = true;
 
     // Row 4
     colIndex = 0;
@@ -234,21 +234,21 @@ const getSafeZoneMask = () => {
     // Row 9
     colIndex = 0;
     rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 7] = true;
     safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 2] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
+    // safeZoneMask[rowIndex][colIndex += 2] = true;
+    // safeZoneMask[rowIndex][colIndex += 1] = true;
 
     // Row 10
     colIndex = 0;
     rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
+    // safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[rowIndex][colIndex += 7] = true;
+    // safeZoneMask[rowIndex][colIndex += 3] = true;
+    // safeZoneMask[rowIndex][colIndex += 1] = true;
 
     // Row 11
     colIndex = 0;

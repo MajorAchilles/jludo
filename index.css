@@ -12,3 +12,7 @@ body {
 .console {
     background-color: lightgray;
 }
+
+.hiddenResources {
+    display: none !important;
+}

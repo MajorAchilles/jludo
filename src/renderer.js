@@ -1,14 +1,13 @@
 import { canvas, colors, context, dimensions } from "./constants";
 import { getCellHeight, getCellWidth, getCellColor } from "./lib/utils";
 import { getBoardMask, getSafeZoneMask } from "./state";
-import GameObject from "./lib/GameObject";
 
 const {
     ROW_COUNT,
-    COLUMN_COUNT
+    COLUMN_COUNT,
+    BOARD_HEIGHT,
+    BOARD_WIDTH
 } = dimensions;
-
-console.log(dimensions);
 
 const clearCanvas = () => {
     canvas.width = canvas.width;
@@ -27,50 +26,65 @@ const renderCell = (left, top, width, height, color) => {
 };
 
 const renderSafeCircle = (left, top, width) => {
-    const radius = width / 2;
-    const centerX = left + radius;
-    const centerY = top + radius;
-    context.beginPath();
-    context.fillStyle = colors.BoundaryColor;
-    context.arc(centerX, centerY, radius * 0.8, 0, 6);
-    context.fill();
+    context.drawImage(
+        document.getElementById("safeStar"),
+        left + 5,
+        top + 5,
+        width - 10,
+        width - 10
+    );
 };
 
 const renderBoard = () => {
-    // const cellHeight = getCellHeight();
-    // const cellWidth = getCellWidth();
-    // const boardMask = getBoardMask();
-    // const safeZoneMask = getSafeZoneMask();
+    const cellHeight = getCellHeight();
+    const cellWidth = getCellWidth();
+    const boardMask = getBoardMask();
+    const safeZoneMask = getSafeZoneMask();
 
-    const gameObject = new GameObject(canvas);
-    gameObject.render({ x: 30, y: 30 });
+    let top = 0;
+    for (let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
+        let left = 0;
+        for (let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
+            renderCell(
+                left,
+                top,
+                cellWidth,
+                cellHeight,
+                getCellColor(boardMask[rowIndex][colIndex])
+            );
+            if (safeZoneMask[rowIndex][colIndex]) {
+                renderSafeCircle(
+                    left,
+                    top,
+                    cellWidth,
+                    cellHeight,
+                    getCellColor(boardMask[rowIndex][colIndex])
+                );
+            }
+            left += cellWidth;
+        }
+        top += cellHeight;
+    }
 
-    // let top = 0;
-    // for (let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
-    //     let left = 0;
-    //     for (let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
-    //         renderCell(
-    //             context,
-    //             left,
-    //             top,
-    //             cellWidth,
-    //             cellHeight,
-    //             getCellColor(boardMask[rowIndex][colIndex])
-    //         );
-    //         if (safeZoneMask[rowIndex][colIndex]) {
-    //             renderSafeCircle(
-    //                 context,
-    //                 left,
-    //                 top,
-    //                 cellWidth,
-    //                 cellHeight,
-    //                 getCellColor(boardMask[rowIndex][colIndex])
-    //             );
-    //         }
-    //         left += cellWidth;
-    //     }
-    //     top += cellHeight;
-    // }
+    context.beginPath();
+    context.lineWidth = 10;
+    context.strokeStyle = colors.BoundaryColor;
+    context.strokeRect(
+        0,
+        0,
+        BOARD_WIDTH,
+        BOARD_HEIGHT
+    );
+
+    context.beginPath();
+    context.lineWidth = 5;
+    context.strokeStyle = colors.BoundaryColor;
+    context.strokeRect(
+        cellHeight * 2,
+        cellWidth * 2,
+        BOARD_WIDTH - (cellWidth * 4),
+        BOARD_HEIGHT - (cellHeight * 4)
+    );
 };
 
 export {

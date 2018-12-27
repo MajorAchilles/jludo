@@ -10,8 +10,8 @@ const CellType = {
 };
 
 const dimensions = {
-    BOARD_HEIGHT: 600,
-    BOARD_WIDTH: 600,
+    BOARD_HEIGHT: canvas.height,
+    BOARD_WIDTH: canvas.width,
     ROW_COUNT: 15,
     COLUMN_COUNT: 15,
     cellOffset: 0
@@ -28,10 +28,7 @@ const colors = {
     BoundaryColor: "#000000"
 };
 
-const blah = () => console.log("BLAH");
-
 export {
-    blah,
     canvas,
     CellType,
     colors,
