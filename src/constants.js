@@ -1,3 +1,4 @@
+/* global document */
 const canvas = document.querySelector(".board");
 const context = canvas.getContext("2d");
 

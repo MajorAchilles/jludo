@@ -1,5 +1,15 @@
-import { canvas, colors, context, dimensions } from "./constants";
-import { getCellHeight, getCellWidth, getCellColor } from "./lib/utils";
+/* global document */
+import {
+    canvas,
+    colors,
+    context,
+    dimensions
+} from "./constants";
+import {
+    getCellHeight,
+    getCellWidth,
+    getCellColor
+} from "./lib/utils";
 import { getBoardMask, getSafeZoneMask } from "./state";
 
 const {
