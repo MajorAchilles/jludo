@@ -10,6 +10,14 @@ const CellType = {
     YELLOW: "CellType::Yellow"
 };
 
+const CoinType = {
+    GREEN: "CoinType::Green",
+    BLUE: "CoinType::Blue",
+    RED: "CoinType::Red",
+    YELLOW: "CoinType::Yellow"
+};
+
+
 const dimensions = {
     BOARD_HEIGHT: canvas.height,
     BOARD_WIDTH: canvas.width,
@@ -26,12 +34,19 @@ const colors = {
         [CellType.RED]: "#FF0000",
         [CellType.YELLOW]: "#FFFF00"
     },
+    CoinFillColorMap: {
+        [CoinType.GREEN]: "#00FF00",
+        [CoinType.BLUE]: "#0000FF",
+        [CoinType.RED]: "#FF0000",
+        [CoinType.YELLOW]: "#FFFF00"
+    },
     BoundaryColor: "#000000"
 };
 
 export {
     canvas,
     CellType,
+    CoinType,
     colors,
     context,
     dimensions

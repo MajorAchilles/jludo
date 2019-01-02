@@ -8,7 +8,9 @@
     },
     "scripts": {
         "lint": "eslint src",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack", 
+        "build:watch": "webpack --watch"
     },
     "repository": {
         "type": "git",
