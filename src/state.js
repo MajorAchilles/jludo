@@ -8,151 +8,63 @@ const {
     COLUMN_COUNT
 } = dimensions;
 
+const drawHorizontalSection = (array, rowIndex, colStart, length, cellType) => {
+    for(let index = colStart; index < colStart + length; index++) {
+        array[rowIndex][index] = cellType;
+    }
+    return array;
+}
+
+const drawVerticalSection = (array, colIndex, rowStart, length, cellType) => {
+    for(let index = rowStart; index < rowStart + length; index++) {
+        array[index][colIndex] = cellType;
+    }
+    return array;
+}
+
 const getBoardMask = () => {
-    const state = [];
+    const board = [];
 
     for (let rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++) {
         const row = [];
         for (let colIndex = 0; colIndex < COLUMN_COUNT; colIndex++) {
             row.push(CellType.EMPTY);
         }
-        state.push(row);
+        board.push(row);
     }
 
-    let rowIndex = 0;
-    let colIndex = 0;
+    drawHorizontalSection(board, 1, 1, 6, CellType.RED);
+    drawHorizontalSection(board, 6, 1, 6, CellType.RED);
+    drawVerticalSection(board, 1, 1, 6, CellType.RED);
+    drawVerticalSection(board, 6, 1, 6, CellType.RED);
+    drawHorizontalSection(board, 8, 2, 5, CellType.RED);
+    drawVerticalSection(board, 7, 7, 2, CellType.RED);
+    board[7][2] = CellType.RED;
 
-    // Row 1
-    rowIndex += 2;
-    state[rowIndex][colIndex += 2] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 2] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
+    drawHorizontalSection(board, 1, 10, 6, CellType.GREEN);
+    drawHorizontalSection(board, 6, 10, 6, CellType.GREEN);
+    drawVerticalSection(board, 10, 1, 6, CellType.GREEN);
+    drawVerticalSection(board, 15, 1, 6, CellType.GREEN);
+    drawVerticalSection(board, 8, 2, 5, CellType.GREEN);
+    drawHorizontalSection(board, 7, 8, 2, CellType.GREEN);
+    board[2][9] = CellType.GREEN;
 
-    // Row 2
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.GREEN;
-    // state[rowIndex][colIndex += 1] = CellType.GREEN;
-    // state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 3] = CellType.GREEN;
-    state[rowIndex][colIndex += 2] = CellType.BLUE;
-    state[rowIndex][colIndex += 2] = CellType.BLUE;
-    // state[rowIndex][colIndex += 1] = CellType.BLUE;
-    // state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 3] = CellType.BLUE;
-
-    // Row 3
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.GREEN;
-    // state[rowIndex][colIndex += 1] = CellType.GREEN;
-    // state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 3] = CellType.GREEN;
-    state[rowIndex][colIndex += 2] = CellType.BLUE;
-    state[rowIndex][colIndex += 2] = CellType.BLUE;
-    // state[rowIndex][colIndex += 1] = CellType.BLUE;
-    // state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 3] = CellType.BLUE;
-
-    // Row 4
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 2] = CellType.BLUE;
-    state[rowIndex][colIndex += 2] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-    state[rowIndex][colIndex += 1] = CellType.BLUE;
-
-    // Row 5
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.GREEN;
-    state[rowIndex][colIndex += 5] = CellType.BLUE;
-
-    // Row 6
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 1] = CellType.GREEN;
-    state[rowIndex][colIndex += 2] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 7] = CellType.RED;
-    state[rowIndex][colIndex += 5] = CellType.YELLOW;
-
-    // Row 8
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 2] = CellType.RED;
-    state[rowIndex][colIndex += 2] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-
-    // Row 9
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.RED;
-    // state[rowIndex][colIndex += 1] = CellType.RED;
-    // state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 3] = CellType.RED;
-    state[rowIndex][colIndex += 2] = CellType.RED;
-    state[rowIndex][colIndex += 2] = CellType.YELLOW;
-    // state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    // state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 3] = CellType.YELLOW;
-
-    // Row 10
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.RED;
-    // state[rowIndex][colIndex += 1] = CellType.RED;
-    // state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 3] = CellType.RED;
-    state[rowIndex][colIndex += 2] = CellType.RED;
-    state[rowIndex][colIndex += 2] = CellType.YELLOW;
-    // state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    // state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 3] = CellType.YELLOW;
-
-    rowIndex += 1;
-    colIndex = 0;
-    state[rowIndex][colIndex += 2] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 1] = CellType.RED;
-    state[rowIndex][colIndex += 2] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-    state[rowIndex][colIndex += 1] = CellType.YELLOW;
-
-
-    return state;
+    drawHorizontalSection(board, 10, 1, 6, CellType.BLUE);
+    drawHorizontalSection(board, 15, 1, 6, CellType.BLUE);
+    drawVerticalSection(board, 1, 10, 6, CellType.BLUE);
+    drawVerticalSection(board, 6, 10, 6, CellType.BLUE);
+    drawVerticalSection(board, 8, 10, 5, CellType.BLUE);
+    drawHorizontalSection(board, 9, 7, 2, CellType.BLUE);
+    board[14][7] = CellType.BLUE;
+    
+    drawHorizontalSection(board, 10, 10, 6, CellType.YELLOW);
+    drawHorizontalSection(board, 15, 10, 6, CellType.YELLOW);
+    drawVerticalSection(board, 10, 10, 6, CellType.YELLOW);
+    drawVerticalSection(board, 15, 10, 6, CellType.YELLOW);
+    drawHorizontalSection(board, 8, 10, 5, CellType.YELLOW);
+    drawVerticalSection(board, 9, 8, 2, CellType.YELLOW);
+    board[9][14] = CellType.YELLOW;
+    return board;
 };
 
 const getSafeZoneMask = () => {
@@ -166,96 +78,37 @@ const getSafeZoneMask = () => {
         safeZoneMask.push(row);
     }
 
-    let rowIndex = 0;
-    let colIndex = 0;
+    safeZoneMask[2][8] = true;
+    safeZoneMask[3][8] = true;
+    safeZoneMask[4][8] = true;
+    safeZoneMask[5][8] = true;
+    safeZoneMask[6][8] = true;
+    safeZoneMask[2][9] = true;
+    safeZoneMask[3][7] = true;
 
-    // Row 1
-    rowIndex += 2;
-    safeZoneMask[rowIndex][colIndex += 7] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[8][2] = true;
+    safeZoneMask[8][3] = true;
+    safeZoneMask[8][4] = true;
+    safeZoneMask[8][5] = true;
+    safeZoneMask[8][6] = true;
+    safeZoneMask[7][2] = true;
+    safeZoneMask[9][3] = true;
 
-    // Row 2
-    rowIndex += 1;
-    colIndex = 0;
-    // safeZoneMask[rowIndex][colIndex += 3] = true;
-    // safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 7] = true;
-    // safeZoneMask[rowIndex][colIndex += 3] = true;
-    // safeZoneMask[rowIndex][colIndex += 1] = true;
+    safeZoneMask[10][8] = true;
+    safeZoneMask[11][8] = true;
+    safeZoneMask[12][8] = true;
+    safeZoneMask[13][8] = true;
+    safeZoneMask[14][8] = true;
+    safeZoneMask[14][7] = true;
+    safeZoneMask[13][9] = true;
 
-    // Row 3
-    colIndex = 0;
-    rowIndex += 1;
-    // safeZoneMask[rowIndex][colIndex += 3] = true;
-    // safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 6] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    // safeZoneMask[rowIndex][colIndex += 3] = true;
-    // safeZoneMask[rowIndex][colIndex += 1] = true;
-
-    // Row 4
-    colIndex = 0;
-    rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 7] = true;
-
-    // Row 5
-    colIndex = 0;
-    rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 2] = true;
-    safeZoneMask[rowIndex][colIndex += 5] = true;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-
-    // Row 6
-    colIndex = 0;
-    rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 2] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 2] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-
-    // Row 7
-    colIndex = 0;
-    rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 4] = true;
-    safeZoneMask[rowIndex][colIndex += 3] = true;
-    safeZoneMask[rowIndex][colIndex += 5] = true;
-
-    // Row 8
-    colIndex = 0;
-    rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 7] = true;
-
-    // Row 9
-    colIndex = 0;
-    rowIndex += 1;
-    // safeZoneMask[rowIndex][colIndex += 3] = true;
-    // safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 7] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-    // safeZoneMask[rowIndex][colIndex += 2] = true;
-    // safeZoneMask[rowIndex][colIndex += 1] = true;
-
-    // Row 10
-    colIndex = 0;
-    rowIndex += 1;
-    // safeZoneMask[rowIndex][colIndex += 3] = true;
-    // safeZoneMask[rowIndex][colIndex += 1] = true;
-    safeZoneMask[rowIndex][colIndex += 7] = true;
-    // safeZoneMask[rowIndex][colIndex += 3] = true;
-    // safeZoneMask[rowIndex][colIndex += 1] = true;
-
-    // Row 11
-    colIndex = 0;
-    rowIndex += 1;
-    safeZoneMask[rowIndex][colIndex += 6] = true;
-    safeZoneMask[rowIndex][colIndex += 1] = true;
-
+    safeZoneMask[8][10] = true;
+    safeZoneMask[8][11] = true;
+    safeZoneMask[8][12] = true;
+    safeZoneMask[8][13] = true;
+    safeZoneMask[8][14] = true;
+    safeZoneMask[7][13] = true;
+    safeZoneMask[9][14] = true;
     return safeZoneMask;
 };
 

@@ -21,8 +21,8 @@ const CoinType = {
 const dimensions = {
     BOARD_HEIGHT: canvas.height,
     BOARD_WIDTH: canvas.width,
-    ROW_COUNT: 15,
-    COLUMN_COUNT: 15,
+    ROW_COUNT: 17,
+    COLUMN_COUNT: 17,
     cellOffset: 0
 };
 

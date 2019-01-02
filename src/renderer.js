@@ -90,10 +90,10 @@ const renderBoard = () => {
     context.lineWidth = 5;
     context.strokeStyle = colors.BoundaryColor;
     context.strokeRect(
-        cellHeight * 2,
-        cellWidth * 2,
-        BOARD_WIDTH - (cellWidth * 4),
-        BOARD_HEIGHT - (cellHeight * 4)
+        cellHeight * 1,
+        cellWidth * 1,
+        BOARD_WIDTH - (cellWidth * 2),
+        BOARD_HEIGHT - (cellHeight * 2)
     );
 };
 
