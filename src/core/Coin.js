@@ -1,20 +1,20 @@
 import GameObject from "./GameObject";
+import { getCoinColor } from "../lib/utils";
 
 export default class Coin extends GameObject {
-    constructor(canvas) {
+    constructor(canvas, coinType) {
         super(canvas);
+        this.coinType = coinType;
+        this.coinColor = getCoinColor(this.coinType);
     }
 
-    setRenderOrigin(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    render(origin = { x: this.x, y: this.y }) { // eslint-disable-line class-methods-use-this
-        const { x, y } = origin;
+    move(x, y) {
         this.setRenderOrigin(x, y);
-        this.context.font = "15px Arial";
-        this.context.fillStyle = "#ff0000";
-        this.context.fillText("Error: Child class must override this function.", this.x, this.y);
+    }
+
+    render() {
+        this.context.fillStyle = this.coinColor;
+
+        // Draw coin here.
     }
 }

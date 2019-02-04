@@ -13,14 +13,14 @@ const drawHorizontalSection = (array, rowIndex, colStart, length, cellType) => {
         array[rowIndex][index] = cellType;
     }
     return array;
-}
+};
 
 const drawVerticalSection = (array, colIndex, rowStart, length, cellType) => {
     for(let index = rowStart; index < rowStart + length; index++) {
         array[index][colIndex] = cellType;
     }
     return array;
-}
+};
 
 const getBoardMask = () => {
     const board = [];
@@ -110,6 +110,69 @@ const getSafeZoneMask = () => {
     safeZoneMask[7][13] = true;
     safeZoneMask[9][14] = true;
     return safeZoneMask;
+};
+
+const createBlueTrack = () => {
+    const track = [
+        { coin: null, row: 13, cell: 7 },
+        { coin: null, row: 12, cell: 7 },
+        { coin: null, row: 11, cell: 7 },
+        { coin: null, row: 10, cell: 7 },
+        { coin: null, row: 9, cell: 6 },
+        { coin: null, row: 9, cell: 5 },
+        { coin: null, row: 9, cell: 4 },
+        { coin: null, row: 9, cell: 3 },
+        { coin: null, row: 9, cell: 2 },
+        { coin: null, row: 9, cell: 1 },
+        { coin: null, row: 8, cell: 1 },
+        { coin: null, row: 7, cell: 1 },
+        { coin: null, row: 7, cell: 2 },
+        { coin: null, row: 7, cell: 3 },
+        { coin: null, row: 7, cell: 4 },
+        { coin: null, row: 7, cell: 5 },
+        { coin: null, row: 7, cell: 6 },
+        { coin: null, row: 6, cell: 7 },
+        { coin: null, row: 5, cell: 7 },
+        { coin: null, row: 4, cell: 7 },
+        { coin: null, row: 3, cell: 7 },
+        { coin: null, row: 2, cell: 7 },
+        { coin: null, row: 1, cell: 7 },
+        { coin: null, row: 1, cell: 8 },
+        { coin: null, row: 1, cell: 9 },
+        { coin: null, row: 2, cell: 9 },
+        { coin: null, row: 3, cell: 9 },
+        { coin: null, row: 4, cell: 9 },
+        { coin: null, row: 5, cell: 9 },
+        { coin: null, row: 6, cell: 9 },
+        { coin: null, row: 7, cell: 10 },
+        { coin: null, row: 7, cell: 11 },
+        { coin: null, row: 7, cell: 12 },
+        { coin: null, row: 7, cell: 13 },
+        { coin: null, row: 7, cell: 14 },
+        { coin: null, row: 7, cell: 15 },
+        { coin: null, row: 8, cell: 15 },
+        { coin: null, row: 9, cell: 15 },
+        { coin: null, row: 9, cell: 14 },
+        { coin: null, row: 9, cell: 13 },
+        { coin: null, row: 9, cell: 12 },
+        { coin: null, row: 9, cell: 11 },
+        { coin: null, row: 9, cell: 10 },
+        { coin: null, row: 10, cell: 9 },
+        { coin: null, row: 11, cell: 9 },
+        { coin: null, row: 12, cell: 9 },
+        { coin: null, row: 13, cell: 9 },
+        { coin: null, row: 14, cell: 9 },
+        { coin: null, row: 15, cell: 9 },
+        { coin: null, row: 16, cell: 9 },
+        { coin: null, row: 16, cell: 8 },
+        { coin: null, row: 15, cell: 8 },
+        { coin: null, row: 14, cell: 8 },
+        { coin: null, row: 13, cell: 8 },
+        { coin: null, row: 12, cell: 8 },
+        { coin: null, row: 11, cell: 8 }
+    ];
+
+    return track;
 };
 
 export {

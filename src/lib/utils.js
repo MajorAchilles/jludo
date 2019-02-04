@@ -20,12 +20,14 @@ const getUUID = () => {
 };
 
 const getCellColor = cellType => colors.CellFillColorMap[cellType];
+const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
 
 export {
     getCanvas,
     getCellColor,
     getCellHeight,
     getCellWidth,
+    getCoinColor,
     getContext,
     getUUID
 };
