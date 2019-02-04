@@ -23,7 +23,9 @@ const dimensions = {
     BOARD_WIDTH: canvas.width,
     ROW_COUNT: 17,
     COLUMN_COUNT: 17,
-    cellOffset: 0
+    CELL_OFFSET: 0,
+    CELL_HEIGHT: canvas.height/17,
+    CELL_WIDTH: canvas.width/17
 };
 
 const colors = {
