@@ -12,7 +12,6 @@ window.onload = () => {
     const coin = new Coin(canvas, CoinType.BLUE);
     let col = 0;
     let row = 0;
-    coin.draw();
     setInterval(() => {
         if (col > dimensions.COLUMN_COUNT) {
             col = 0;

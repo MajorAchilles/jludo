@@ -1,6 +1,6 @@
 import GameObject from "./GameObject";
-import { getCoinColor } from "../lib/utils";
-import { colors, dimensions } from "../constants";
+import { getCoinColor, getCellHeight, getCellWidth } from "../lib/utils";
+import { colors } from "../constants";
 
 export default class Coin extends GameObject {
     constructor(canvas, coinType) {
@@ -12,9 +12,9 @@ export default class Coin extends GameObject {
     }
 
     move(row, column) {
-        const x = (column * dimensions.CELL_WIDTH) - (dimensions.CELL_WIDTH / 2);
-        const y = (row * dimensions.CELL_HEIGHT) - (dimensions.CELL_HEIGHT / 2);
-        this.setRenderOrigin(x, y);
+        const left = (column * getCellWidth()) - (getCellWidth() / 2);
+        const top = (row * getCellHeight()) - (getCellHeight() / 2);
+        this.setRenderOrigin(left, top);
     }
 
     /**
@@ -24,13 +24,12 @@ export default class Coin extends GameObject {
         const context = this.getContext();
         context.fillStyle = this.coinColor;
         context.strokeStyle = colors.BoundaryColor;
-        // context.fillRect(10, 10, 100, 100);
         context.beginPath();
         context.ellipse(
-            this.x,
-            this.y,
-            dimensions.CELL_HEIGHT / 2,
-            dimensions.CELL_WIDTH / 2,
+            this.left,
+            this.top,
+            getCellHeight() / 2,
+            getCellWidth() / 2,
             0,
             0,
             2 * Math.PI,
@@ -41,10 +40,10 @@ export default class Coin extends GameObject {
         context.stroke();
         context.beginPath();
         context.ellipse(
-            this.x,
-            this.y,
-            dimensions.CELL_HEIGHT / 3,
-            dimensions.CELL_WIDTH / 3,
+            this.left,
+            this.top,
+            getCellHeight() / 3,
+            getCellWidth() / 3,
             0,
             0,
             2 * Math.PI,

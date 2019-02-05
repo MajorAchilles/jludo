@@ -12,8 +12,8 @@ export default class GameObject {
         this.isRenderable = true;
         this.canvas = canvas;
         this.context = this.canvas.getContext("2d");
-        this.x = 0;
-        this.y = 0;
+        this.top = 0;
+        this.left = 0;
     }
 
     /**
@@ -34,23 +34,23 @@ export default class GameObject {
 
     /**
      * Sets the origins for the render function
-     * @param {Number} x The x co-ordinate
-     * @param {Number} y The y co-ordinate
+     * @param {Number} left The x co-ordinate
+     * @param {Number} top The y co-ordinate
      * @returns {undefined} This function doesn't return anything.
      */
-    setRenderOrigin(x, y) {
-        this.x = x;
-        this.y = y;
+    setRenderOrigin(left, top) {
+        this.left = left;
+        this.top = top;
     }
 
     /**
      * Moves the render origins by the given offset value.
-     * @param {Number} xOffset The amount by which we want to move the x coordinate
-     * @param {Number} yOffset The amount by which we want to move the y coordinate
+     * @param {Number} topOffset The amount by which we want to move the x coordinate
+     * @param {Number} leftOffset The amount by which we want to move the y coordinate
      * @returns {undefined} This function doesn't return anything.
      */
-    move(xOffset, yOffset) {
-        this.setRenderOrigin(this.x + xOffset, this.y + yOffset);
+    move(topOffset, leftOffset) {
+        this.setRenderOrigin(this.top + topOffset, this.left + leftOffset);
     }
 
     /**
@@ -59,7 +59,7 @@ export default class GameObject {
      */
     draw() {
         this.preRender();
-        if (this.x <= dimensions.BOARD_HEIGHT && this.y <= dimensions.BOARD_WIDTH) {
+        if (this.top <= dimensions.BOARD_HEIGHT && this.left <= dimensions.BOARD_WIDTH) {
             this.render();
         }
         this.postRender();
@@ -80,7 +80,7 @@ export default class GameObject {
     render() {
         this.context.font = "15px Arial";
         this.context.fillStyle = "#ff0000";
-        this.context.fillText("Error: Child class must override this function.", this.x, this.y);
+        this.context.fillText("Error: Child class must override this function.", this.top, this.left);
     }
 
     /**
