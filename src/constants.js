@@ -2,6 +2,18 @@
 const canvas = document.querySelector(".board");
 const context = canvas.getContext("2d");
 
+/**
+ * This function returns the global context
+ * @returns {CanvasRenderingContext2D} The global context.
+ */
+const getContext = () => context;
+
+/**
+ * This function returns the global canvas
+ * @returns {HTMLCanvasElement} The global canvas.
+ */
+const getCanvas = () => canvas;
+
 const CellType = {
     GREEN: "CellType::Green",
     BLUE: "CellType::Blue",
@@ -24,8 +36,8 @@ const dimensions = {
     ROW_COUNT: 17,
     COLUMN_COUNT: 17,
     CELL_OFFSET: 0,
-    CELL_HEIGHT: canvas.height/17,
-    CELL_WIDTH: canvas.width/17
+    CELL_HEIGHT: canvas.height / 17,
+    CELL_WIDTH: canvas.width / 17
 };
 
 const colors = {
@@ -51,5 +63,7 @@ export {
     CoinType,
     colors,
     context,
-    dimensions
+    dimensions,
+    getCanvas,
+    getContext
 };

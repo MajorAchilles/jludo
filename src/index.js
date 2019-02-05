@@ -11,5 +11,5 @@ window.onload = () => {
     renderBoard();
     const coin = new Coin(canvas, CoinType.BLUE);
     coin.setRenderOrigin(100, 100);
-    coin.render();
+    coin.draw();
 };

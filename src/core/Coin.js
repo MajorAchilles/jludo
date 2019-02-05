@@ -9,8 +9,11 @@ export default class Coin extends GameObject {
         this.coinColor = getCoinColor(this.coinType);
     }
 
-    move(x, y) {
-        this.setRenderOrigin(x, y);
+    /**
+     * @inherit
+     */
+    preRender() {
+        this.move(1, 1);
     }
 
     /**
@@ -33,5 +36,9 @@ export default class Coin extends GameObject {
             false
         );
         context.stroke();
+    }
+
+    postRender() {
+        setTimeout(() => this.draw(), 50);
     }
 }
