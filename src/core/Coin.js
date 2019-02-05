@@ -7,13 +7,14 @@ export default class Coin extends GameObject {
         super(canvas);
         this.coinType = coinType;
         this.coinColor = getCoinColor(this.coinType);
+        this.row = 0;
+        this.col = 0;
     }
 
-    /**
-     * @inherit
-     */
-    preRender() {
-        this.move(1, 1);
+    move(row, column) {
+        const x = (column * dimensions.CELL_WIDTH) - (dimensions.CELL_WIDTH / 2);
+        const y = (row * dimensions.CELL_HEIGHT) - (dimensions.CELL_HEIGHT / 2);
+        this.setRenderOrigin(x, y);
     }
 
     /**
@@ -35,10 +36,21 @@ export default class Coin extends GameObject {
             2 * Math.PI,
             false
         );
+        context.fill();
+        context.lineWidth = 2;
         context.stroke();
-    }
-
-    postRender() {
-        setTimeout(() => this.draw(), 50);
+        context.beginPath();
+        context.ellipse(
+            this.x,
+            this.y,
+            dimensions.CELL_HEIGHT / 3,
+            dimensions.CELL_WIDTH / 3,
+            0,
+            0,
+            2 * Math.PI,
+            false
+        );
+        context.lineWidth = 1;
+        context.stroke();
     }
 }

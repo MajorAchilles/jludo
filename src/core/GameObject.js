@@ -1,4 +1,5 @@
 import { getUUID } from "../lib/utils";
+import { dimensions } from "../constants";
 
 export default class GameObject {
     /**
@@ -11,6 +12,8 @@ export default class GameObject {
         this.isRenderable = true;
         this.canvas = canvas;
         this.context = this.canvas.getContext("2d");
+        this.x = 0;
+        this.y = 0;
     }
 
     /**
@@ -56,7 +59,9 @@ export default class GameObject {
      */
     draw() {
         this.preRender();
-        this.render();
+        if (this.x <= dimensions.BOARD_HEIGHT && this.y <= dimensions.BOARD_WIDTH) {
+            this.render();
+        }
         this.postRender();
     }
 

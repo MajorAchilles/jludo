@@ -4,12 +4,23 @@ import {
     renderBoard
 } from "./renderer";
 import Coin from "./core/Coin";
-import { canvas, CoinType } from "./constants";
+import { canvas, CoinType, dimensions } from "./constants";
 
 window.onload = () => {
     clearCanvas();
     renderBoard();
     const coin = new Coin(canvas, CoinType.BLUE);
-    coin.setRenderOrigin(100, 100);
+    let col = 0;
+    let row = 0;
     coin.draw();
+    setInterval(() => {
+        if (col > dimensions.COLUMN_COUNT) {
+            col = 0;
+            row++;
+        } else {
+            col ++;
+        }
+        coin.move(row, col)
+        coin.draw();
+    }, 100);
 };
