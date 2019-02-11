@@ -1,15 +1,18 @@
 /* global document */
 import {
-    canvas,
     colors,
     context,
     dimensions
 } from "./constants";
+
 import {
+    getCanvas,
     getCellHeight,
     getCellWidth,
-    getCellColor
+    getCellColor,
+    getContext
 } from "./lib/utils";
+
 import { getBoardMask, getSafeZoneMask } from "./state";
 
 const {
@@ -19,9 +22,25 @@ const {
     BOARD_WIDTH
 } = dimensions;
 
-const clearCanvas = () => {
+
+const renderBoardFromBackground = () => {
+    getContext().drawImage(
+        document.getElementById("background"),
+        0,
+        0,
+        dimensions.BOARD_WIDTH,
+        dimensions.BOARD_HEIGHT
+    );
+};
+
+const clearCanvas = (renderBackground = false) => {
+    const canvas = getCanvas();
     canvas.width = canvas.width;
     canvas.height = canvas.height;
+
+    if (renderBackground) {
+        renderBoardFromBackground();
+    }
 };
 
 const renderCell = (left, top, width, height, color) => {

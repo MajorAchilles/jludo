@@ -9,8 +9,10 @@
     "scripts": {
         "lint": "eslint src",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "webpack", 
-        "build:watch": "webpack --watch"
+        "build": "webpack",
+        "build:cd": "nodemon --watch src --exec npm run build:deploy",
+        "build:deploy": "webpack && http-server -p 80",
+        "build:watch": "nodemon --watch src --exec npm run build"
     },
     "repository": {
         "type": "git",
@@ -38,6 +40,8 @@
         "eslint-config-airbnb-base": "^13.1.0",
         "eslint-config-amlan": "0.0.1",
         "eslint-plugin-import": "^2.14.0",
+        "http-server": "^0.11.1",
+        "nodemon": "^1.18.9",
         "webpack": "^4.28.2",
         "webpack-cli": "^3.1.2"
     }

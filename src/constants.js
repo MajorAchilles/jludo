@@ -36,7 +36,7 @@ const colors = {
     },
     CoinFillColorMap: {
         [CoinType.GREEN]: "#00FF00",
-        [CoinType.BLUE]: "#0000FF",
+        [CoinType.BLUE]: "#4D94FF",
         [CoinType.RED]: "#FF0000",
         [CoinType.YELLOW]: "#FFFF00"
     },

@@ -1,7 +1,9 @@
-/* global document, crypto */
+/* global crypto, document */
 import {
     colors,
-    dimensions
+    dimensions,
+    context,
+    canvas
 } from "../constants";
 
 const {
@@ -33,7 +35,13 @@ const getUUID = () => {
 const getCellColor = cellType => colors.CellFillColorMap[cellType];
 const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
 
+/**
+ * Converts the canvas to an image and rewrites the document
+ */
+const canvasToImage = () => document.write(`<img src="${getCanvas().toDataURL("image/png")}"/>`);
+
 export {
+    canvasToImage,
     getCanvas,
     getCellColor,
     getCellHeight,

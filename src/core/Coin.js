@@ -28,8 +28,8 @@ export default class Coin extends GameObject {
         context.ellipse(
             this.left,
             this.top,
-            getCellHeight() / 2,
-            getCellWidth() / 2,
+            (getCellHeight() / 2) - 5,
+            (getCellWidth() / 2) - 5,
             0,
             0,
             2 * Math.PI,
@@ -42,8 +42,8 @@ export default class Coin extends GameObject {
         context.ellipse(
             this.left,
             this.top,
-            getCellHeight() / 3,
-            getCellWidth() / 3,
+            (getCellHeight() / 3) - 5,
+            (getCellWidth() / 3) - 5,
             0,
             0,
             2 * Math.PI,
