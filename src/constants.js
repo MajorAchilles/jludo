@@ -35,10 +35,10 @@ const colors = {
         [CellType.YELLOW]: "#FFFF00"
     },
     CoinFillColorMap: {
-        [CoinType.GREEN]: "#00FF00",
+        [CoinType.GREEN]: "#00FF99",
         [CoinType.BLUE]: "#4D94FF",
-        [CoinType.RED]: "#FF0000",
-        [CoinType.YELLOW]: "#FFFF00"
+        [CoinType.RED]: "#FF5050",
+        [CoinType.YELLOW]: "#FFFF66"
     },
     BoundaryColor: "#000000"
 };
@@ -49,7 +49,5 @@ export {
     CoinType,
     colors,
     context,
-    dimensions,
-    // getCanvas,
-    // getContext
+    dimensions
 };

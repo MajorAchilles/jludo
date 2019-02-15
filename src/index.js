@@ -1,16 +1,14 @@
-/* global document, window */
+/* global window */
 import {
-    clearCanvas,
-    renderBoard
+    clearCanvas
 } from "./renderer";
 import Coin from "./core/Coin";
 import { canvas, CoinType, dimensions } from "./constants";
-import { getContext, getCanvas } from "./lib/utils";
 
 window.onload = () => {
     clearCanvas(true);
 
-    const coin = new Coin(canvas, CoinType.BLUE);
+    const coin = new Coin(canvas, CoinType.YELLOW);
     let col = 0;
     let row = 0;
 
