@@ -33,3 +33,27 @@ moveInterval = (line, startPoint) => {
 };
 
 Might work....
+
+# Track
+
+https://docs.google.com/spreadsheets/d/1uiehMOyrOa2uxAXQKQzMhXsfcfMqdu1JyCXQ5VP33XE/edit?usp=sharing
+
+
+
+
+								X		X								A									X		X								A									X		X								A									X		X								A									
+
+
+
+Track length: 19 * 4 = 76
+
+
+[
+    {
+        row: 1,
+        col: 2,
+        coinType: ALL,
+        isSafe: false,
+        isTerminal: false
+    }
+]

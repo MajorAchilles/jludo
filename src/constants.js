@@ -14,7 +14,8 @@ const CoinType = {
     GREEN: "CoinType::Green",
     BLUE: "CoinType::Blue",
     RED: "CoinType::Red",
-    YELLOW: "CoinType::Yellow"
+    YELLOW: "CoinType::Yellow",
+    ALL: "CoinType::All"
 };
 
 

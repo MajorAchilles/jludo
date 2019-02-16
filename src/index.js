@@ -3,7 +3,8 @@ import {
     clearCanvas
 } from "./renderer";
 import Coin from "./core/Coin";
-import { canvas, CoinType, dimensions } from "./constants";
+import { canvas, CoinType, context } from "./constants";
+import { generateTrack } from "./state";
 
 window.onload = () => {
     clearCanvas(true);
@@ -11,17 +12,19 @@ window.onload = () => {
     const coin = new Coin(canvas, CoinType.YELLOW);
     let col = 0;
     let row = 0;
+    let index = 0;
+
+    const track = generateTrack();
 
     setInterval(() => {
-        if (col > dimensions.COLUMN_COUNT) {
-            col = 0;
-            row++;
-        } else {
-            col++;
-        }
-
         clearCanvas(true);
-        coin.move(row, col);
+        coin.move(track[index].row, track[index].col);
+        index++;
+        if (index >= track.length) {
+            index = 0;
+        }
+        context.font = "20px Georgia";
+        context.fillText(`ROW: ${track[index].row}, COL: ${track[index].col}`, 20, 20);
         coin.draw();
     }, 100);
 };
