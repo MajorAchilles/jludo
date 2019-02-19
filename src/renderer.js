@@ -22,25 +22,10 @@ const {
     BOARD_WIDTH
 } = dimensions;
 
-
-const renderBoardFromBackground = () => {
-    getContext().drawImage(
-        document.getElementById("background"),
-        0,
-        0,
-        dimensions.BOARD_WIDTH,
-        dimensions.BOARD_HEIGHT
-    );
-};
-
-const clearCanvas = (renderBackground = false) => {
+const clearCanvas = () => {
     const canvas = getCanvas();
     canvas.width = canvas.width;
     canvas.height = canvas.height;
-
-    if (renderBackground) {
-        renderBoardFromBackground();
-    }
 };
 
 const renderCell = (left, top, width, height, color) => {

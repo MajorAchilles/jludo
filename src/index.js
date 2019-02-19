@@ -3,11 +3,19 @@ import {
     clearCanvas
 } from "./renderer";
 import Coin from "./core/Coin";
-import { canvas, CoinType, context } from "./constants";
+import Background from "./core/Background";
+import {
+    canvas,
+    CoinType,
+    context,
+    timing,
+    dimensions
+} from "./constants";
 import { generateTrack } from "./state";
 
 window.onload = () => {
-    clearCanvas(true);
+    clearCanvas();
+    new Background(canvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT).render();
 
     const coin = new Coin(canvas, CoinType.YELLOW);
     let index = 0;
@@ -24,5 +32,5 @@ window.onload = () => {
         context.font = "20px Georgia";
         context.fillText(`ROW: ${track[index].row}, COL: ${track[index].col}`, 20, 20);
         coin.draw();
-    }, 100);
+    }, timing.TIME_PER_FRAME);
 };

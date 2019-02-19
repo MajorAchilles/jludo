@@ -44,11 +44,19 @@ const colors = {
     BoundaryColor: "#000000"
 };
 
+const FRAMES_PER_SECOND = 60;
+const MILISECONDS_PER_SECOND = 1000;
+const timing = {
+    FRAMES_PER_SECOND,
+    TIME_PER_FRAME: MILISECONDS_PER_SECOND / FRAMES_PER_SECOND
+};
+
 export {
     canvas,
     CellType,
     CoinType,
     colors,
     context,
-    dimensions
+    dimensions,
+    timing
 };
