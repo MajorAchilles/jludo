@@ -13,7 +13,16 @@ const {
     COLUMN_COUNT
 } = dimensions;
 
+/**
+ * Gets the cell height
+ * @returns {Number} The cell height
+ */
 const getCellHeight = () => BOARD_HEIGHT / ROW_COUNT;
+
+/**
+ * Gets the cell width
+ * @returns {Number} The cell width
+ */
 const getCellWidth = () => BOARD_WIDTH / COLUMN_COUNT;
 
 /**
@@ -28,11 +37,26 @@ const getContext = () => context;
  */
 const getCanvas = () => canvas;
 
+/**
+ * Gets an unique pseudorandom identifier string
+ * @returns {String} A identifier strign
+ */
 const getUUID = () => {
     return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)); // eslint-disable-line no-bitwise, no-mixed-operators, max-len
 };
 
+/**
+ * Returns the color for the given cell type
+ * @param {CellType} cellType The cell type
+ * @returns {String} The color hex string
+ */
 const getCellColor = cellType => colors.CellFillColorMap[cellType];
+
+/**
+ * Returns the color for the given coin type
+ * @param {CoinType} coinType The coin type
+ * @returns {String} The color hex string
+ */
 const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
 
 /**
@@ -40,12 +64,27 @@ const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
  */
 const canvasToImage = () => document.write(`<img src="${getCanvas().toDataURL("image/png")}"/>`);
 
+/**
+ * Returns the location of the click in row and column indices
+ * @param {Event} clickEvent The click event data
+ * @returns {Object} An object cointaining the row and column index.
+ */
+const getClickLocation = (clickEvent) => {
+    const left = clickEvent.pageX - getCanvas().offsetLeft;
+    const top = clickEvent.pageY - getCanvas().offsetTop;
+    const row = Math.floor(top / getCellHeight()) + 1;
+    const col = Math.floor(left / getCellWidth()) + 1;
+
+    return { row, col };
+};
+
 export {
     canvasToImage,
     getCanvas,
     getCellColor,
     getCellHeight,
     getCellWidth,
+    getClickLocation,
     getCoinColor,
     getContext,
     getUUID

@@ -44,7 +44,7 @@ const colors = {
     BoundaryColor: "#000000"
 };
 
-const FRAMES_PER_SECOND = 60;
+const FRAMES_PER_SECOND = 24;
 const MILISECONDS_PER_SECOND = 1000;
 const timing = {
     FRAMES_PER_SECOND,
