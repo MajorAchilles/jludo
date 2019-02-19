@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 import {
     CellType,
     dimensions,
@@ -10,15 +11,15 @@ const {
 } = dimensions;
 
 const drawHorizontalSection = (array, rowIndex, colStart, length, cellType) => {
-    for(let index = colStart; index < colStart + length; index++) {
-        array[rowIndex][index] = cellType;
+    for (let index = colStart; index < colStart + length; index++) {
+        array[rowIndex][index] = cellType; // eslint-disable-line no-param-reassign
     }
     return array;
 };
 
 const drawVerticalSection = (array, colIndex, rowStart, length, cellType) => {
-    for(let index = rowStart; index < rowStart + length; index++) {
-        array[index][colIndex] = cellType;
+    for (let index = rowStart; index < rowStart + length; index++) {
+        array[index][colIndex] = cellType; // eslint-disable-line no-param-reassign
     }
     return array;
 };
@@ -57,7 +58,7 @@ const getBoardMask = () => {
     drawVerticalSection(board, 8, 10, 5, CellType.BLUE);
     drawHorizontalSection(board, 9, 7, 2, CellType.BLUE);
     board[14][7] = CellType.BLUE;
-    
+
     drawHorizontalSection(board, 10, 10, 6, CellType.YELLOW);
     drawHorizontalSection(board, 15, 10, 6, CellType.YELLOW);
     drawVerticalSection(board, 10, 10, 6, CellType.YELLOW);
@@ -123,12 +124,6 @@ const generateTrack = () => {
         { row: 7, col: 9, coinType: CoinType.GREEN, isSafe: true, isTerminal: false },
         { row: 8, col: 9, coinType: CoinType.GREEN, isSafe: true, isTerminal: false },
         { row: 2, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: true },
-        { row: 2, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: true },
-        { row: 2, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: true },
-        { row: 2, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: true },
-        { row: 2, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: true },
-        { row: 3, col: 10, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 3, col: 10, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 3, col: 10, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 4, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 5, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
@@ -137,8 +132,6 @@ const generateTrack = () => {
         { row: 8, col: 11, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 8, col: 12, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 8, col: 13, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
-        { row: 8, col: 14, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 8, col: 14, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 8, col: 14, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 8, col: 15, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 8, col: 16, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
@@ -149,13 +142,7 @@ const generateTrack = () => {
         { row: 9, col: 12, coinType: CoinType.YELLOW, isSafe: true, isTerminal: false },
         { row: 9, col: 11, coinType: CoinType.YELLOW, isSafe: true, isTerminal: false },
         { row: 9, col: 10, coinType: CoinType.YELLOW, isSafe: true, isTerminal: true },
-        { row: 9, col: 10, coinType: CoinType.YELLOW, isSafe: true, isTerminal: true },
-        { row: 9, col: 10, coinType: CoinType.YELLOW, isSafe: true, isTerminal: true },
-        { row: 9, col: 10, coinType: CoinType.YELLOW, isSafe: true, isTerminal: true },
-        { row: 9, col: 10, coinType: CoinType.YELLOW, isSafe: true, isTerminal: true },
         { row: 10, col: 16, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
-        { row: 10, col: 15, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 10, col: 15, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 10, col: 15, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 10, col: 14, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 10, col: 13, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
@@ -164,8 +151,6 @@ const generateTrack = () => {
         { row: 11, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 12, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 13, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
-        { row: 14, col: 10, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 14, col: 10, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 14, col: 10, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 15, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 16, col: 10, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
@@ -176,13 +161,7 @@ const generateTrack = () => {
         { row: 12, col: 9, coinType: CoinType.BLUE, isSafe: true, isTerminal: false },
         { row: 11, col: 9, coinType: CoinType.BLUE, isSafe: true, isTerminal: false },
         { row: 10, col: 9, coinType: CoinType.BLUE, isSafe: true, isTerminal: true },
-        { row: 10, col: 9, coinType: CoinType.BLUE, isSafe: true, isTerminal: true },
-        { row: 10, col: 9, coinType: CoinType.BLUE, isSafe: true, isTerminal: true },
-        { row: 10, col: 9, coinType: CoinType.BLUE, isSafe: true, isTerminal: true },
-        { row: 10, col: 9, coinType: CoinType.BLUE, isSafe: true, isTerminal: true },
         { row: 16, col: 8, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
-        { row: 15, col: 8, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 15, col: 8, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 15, col: 8, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 14, col: 8, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 13, col: 8, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
@@ -191,8 +170,6 @@ const generateTrack = () => {
         { row: 10, col: 7, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 10, col: 6, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 10, col: 5, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
-        { row: 10, col: 4, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 10, col: 4, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 10, col: 4, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 10, col: 3, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 10, col: 2, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
@@ -203,13 +180,7 @@ const generateTrack = () => {
         { row: 9, col: 6, coinType: CoinType.RED, isSafe: true, isTerminal: false },
         { row: 9, col: 7, coinType: CoinType.RED, isSafe: true, isTerminal: false },
         { row: 9, col: 8, coinType: CoinType.RED, isSafe: true, isTerminal: true },
-        { row: 9, col: 8, coinType: CoinType.RED, isSafe: true, isTerminal: true },
-        { row: 9, col: 8, coinType: CoinType.RED, isSafe: true, isTerminal: true },
-        { row: 9, col: 8, coinType: CoinType.RED, isSafe: true, isTerminal: true },
-        { row: 9, col: 8, coinType: CoinType.RED, isSafe: true, isTerminal: true },
         { row: 8, col: 2, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
-        { row: 8, col: 3, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 8, col: 3, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 8, col: 3, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 8, col: 4, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 8, col: 5, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
@@ -219,10 +190,8 @@ const generateTrack = () => {
         { row: 6, col: 8, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 5, col: 8, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
         { row: 4, col: 8, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 4, col: 8, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
-        { row: 4, col: 8, coinType: CoinType.ALL, isSafe: true, isTerminal: false },
         { row: 3, col: 8, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
-        { row: 2, col: 8, coinType: CoinType.ALL, isSafe: false, isTerminal: false },
+        { row: 2, col: 8, coinType: CoinType.ALL, isSafe: false, isTerminal: false }
     ];
 
     return track;

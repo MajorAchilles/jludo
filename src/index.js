@@ -10,8 +10,6 @@ window.onload = () => {
     clearCanvas(true);
 
     const coin = new Coin(canvas, CoinType.YELLOW);
-    let col = 0;
-    let row = 0;
     let index = 0;
 
     const track = generateTrack();
