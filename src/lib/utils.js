@@ -78,6 +78,12 @@ const getClickLocation = (clickEvent) => {
     return { row, col };
 };
 
+/**
+ * Gets a random dice value between and including 1 and 6
+ * @returns {Number} A number between and including 1 and 6
+ */
+const getDiceValue = () => Math.floor(Math.random() * 6) + 1;
+
 export {
     canvasToImage,
     getCanvas,
@@ -87,5 +93,6 @@ export {
     getClickLocation,
     getCoinColor,
     getContext,
+    getDiceValue,
     getUUID
 };

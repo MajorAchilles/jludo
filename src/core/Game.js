@@ -14,4 +14,19 @@ export default class Game {
         this.gameOptions = Object.assign({}, defaultGameOptions, gameOptions);
         this.currentPlayerIndex = 0;
     }
+
+    /**
+     * Sets the next player in order to the current player
+     */
+    setNextPlayer() {
+        if (this.currentPlayerIndex === this.players.length - 1) {
+            currentPlayerIndex = 0;
+        } else {
+            currentPlayerIndex++;
+        }
+    }
+
+    throwDice() {
+        
+    }
 };
