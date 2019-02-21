@@ -1,7 +1,8 @@
 /* globals document */
-import { CoinType, dimensions, playerStartPositions } from "../constants";
+import { CoinType, dimensions, playerStartPositions, diceCanvas } from "../constants";
 import Coin from "./Coin";
 import Board from "./Board";
+import Dice from "./Dice";
 
 const defaultGameOptions = {
     escapeOn: 6,
@@ -10,7 +11,6 @@ const defaultGameOptions = {
 };
 
 const defaultPlayers = [CoinType.RED, CoinType.GREEN, CoinType.YELLOW, CoinType.BLUE];
-
 
 const generatePlayerCoins = (players, canvas) => {
     const coins = {};
@@ -28,6 +28,7 @@ export default class Game {
         this.gameOptions = Object.assign({}, defaultGameOptions, gameOptions);
         this.currentPlayerIndex = 0;
         this.board = new Board(canvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
+        this.dice = new Dice(diceCanvas);
         this.playerCoins = generatePlayerCoins(this.players, canvas);
         this.playerNameDiv = document.querySelector(".playerName");
     }
@@ -51,16 +52,13 @@ export default class Game {
         return this.players[this.currentPlayerIndex];
     }
 
+    /**
+     * Throws the dice
+     * @returns {undefined} This function doesn't return anything.
+     */
     throwDice() {
-        const player = this.getCurrentPlayer();
-        const coins = this.playerCoins[player];
-        const isAllIn = coins.every((coin, index) => {
-            const startPosition = playerStartPositions[player][index];
-            const location = coin.getLocation();
-            return location.row === startPosition.row && location.col === startPosition.col;
-        });
-
-        console.log(isAllIn);
+        this.dice.throw();
+        this.render();
     };
 
     /**
@@ -74,6 +72,7 @@ export default class Game {
         ].join(" ");
 
         this.board.draw();
+        this.dice.draw();
         Object.keys(this.playerCoins).forEach(player => this.playerCoins[player].forEach(coin => coin.draw()));
     }
 }

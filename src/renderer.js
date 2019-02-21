@@ -9,8 +9,7 @@ import {
     getCanvas,
     getCellHeight,
     getCellWidth,
-    getCellColor,
-    getContext
+    getCellColor
 } from "./lib/utils";
 
 import { getBoardMask, getSafeZoneMask } from "./state";

@@ -28,7 +28,6 @@ window.onload = () => {
     const board = new Board(canvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
 
     const testCoin = new Coin(canvas, CoinType.YELLOW);
-    const dice = new Dice(diceCanvas);
     let index = 0;
 
     const { track } = board;
@@ -42,7 +41,6 @@ window.onload = () => {
             index = 0;
         }
 
-        dice.draw();
         testCoin.draw();
     }, timing.TIME_PER_FRAME);
 
