@@ -45,5 +45,5 @@ window.onload = () => {
         clearInterval(testInterval);
         clearCanvas();
         startGame();
-    }, 5000);
+    }, 2000);
 };

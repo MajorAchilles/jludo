@@ -12,9 +12,16 @@ const defaultPlayers = [CoinType.RED, CoinType.GREEN, CoinType.YELLOW, CoinType.
 
 const playerStartPositions = {
     [CoinType.RED]: { row: 4, col: 4 },
-    [CoinType.GREEN]: { row: 13, col: 4 },
+    [CoinType.GREEN]: { row: 4, col: 13 },
     [CoinType.YELLOW]: { row: 13, col: 13 },
-    [CoinType.BLUE]: { row: 4, col: 13 }
+    [CoinType.BLUE]: { row: 13, col: 4 }
+};
+
+const playerTrackStartPositions = {
+    [CoinType.RED]: { row: 8, col: 3 },
+    [CoinType.GREEN]: { row: 3, col: 10 },
+    [CoinType.YELLOW]: { row: 10, col: 15 },
+    [CoinType.BLUE]: { row: 15, col: 8 }
 };
 
 const generatePlayerCoins = (players, canvas) => {
@@ -29,7 +36,7 @@ const generatePlayerCoins = (players, canvas) => {
             new Coin(canvas, playerType, row, col),
             new Coin(canvas, playerType, row, col + 1),
             new Coin(canvas, playerType, row + 1, col),
-            new Coin(canvas, playerType, row + 1, col + 1),
+            new Coin(canvas, playerType, row + 1, col + 1)
         ];
     });
     return coins;
