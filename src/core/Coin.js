@@ -3,12 +3,11 @@ import { getCoinColor, getCellHeight, getCellWidth } from "../lib/utils";
 import { colors } from "../constants";
 
 export default class Coin extends GameObject {
-    constructor(canvas, coinType) {
+    constructor(canvas, coinType, startRow, startCol) {
         super(canvas);
         this.coinType = coinType;
         this.coinColor = getCoinColor(this.coinType);
-        this.row = 0;
-        this.col = 0;
+        this.move(startRow, startCol);
     }
 
     move(row, column) {
