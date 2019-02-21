@@ -8,11 +8,14 @@ import {
     canvas,
     CoinType,
     timing,
-    dimensions
+    dimensions,
+    diceCanvas
 } from "./constants";
+import Dice from "./core/Dice";
 
 const test = (background) => {
     const coin = new Coin(canvas, CoinType.YELLOW);
+    const dice = new Dice(diceCanvas);
     let index = 0;
 
     const { track } = background;
@@ -25,6 +28,7 @@ const test = (background) => {
             index = 0;
         }
 
+        dice.draw();
         coin.draw();
     }, timing.TIME_PER_FRAME);
 };

@@ -57,3 +57,8 @@ Track length: 19 * 4 = 76
         isTerminal: false
     }
 ]
+
+
+optimize board render calls
+
+Render just the cell instead of the whole thing. Utilize sprite render logic

@@ -3,7 +3,9 @@ import {
     colors,
     dimensions,
     context,
-    canvas
+    canvas,
+    diceCanvas,
+    diceContext
 } from "../constants";
 
 const {
@@ -33,6 +35,18 @@ const getContext = () => context;
 
 /**
  * This function returns the global canvas
+ * @returns {HTMLCanvasElement} The global dice canvas.
+ */
+const getDiceCanvas = () => diceCanvas;
+
+/**
+ * This function returns the global dice context
+ * @returns {CanvasRenderingContext2D} The global dice context.
+ */
+const getDiceContext = () => diceContext;
+
+/**
+ * This function returns the global dice canvas
  * @returns {HTMLCanvasElement} The global canvas.
  */
 const getCanvas = () => canvas;
@@ -93,6 +107,8 @@ export {
     getClickLocation,
     getCoinColor,
     getContext,
+    getDiceCanvas,
+    getDiceContext,
     getDiceValue,
     getUUID
 };

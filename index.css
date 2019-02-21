@@ -13,6 +13,10 @@ body {
     background-color: lightgray;
 }
 
+.diceDisplay {
+    padding-top: 10px;
+}
+
 .hiddenResources {
     display: none !important;
 }

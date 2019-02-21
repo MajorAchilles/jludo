@@ -1,6 +1,8 @@
 /* global document */
 const canvas = document.querySelector(".board");
 const context = canvas.getContext("2d");
+const diceCanvas = document.querySelector(".dice");
+const diceContext = diceCanvas.getContext("2d");
 
 const CellType = {
     GREEN: "CellType::Green",
@@ -57,6 +59,8 @@ export {
     CoinType,
     colors,
     context,
+    diceCanvas,
+    diceContext,
     dimensions,
     timing
 };
