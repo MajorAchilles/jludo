@@ -1,4 +1,5 @@
-import { CoinType, dimensions } from "../constants";
+/* globals document */
+import { CoinType, dimensions, playerStartPositions } from "../constants";
 import Coin from "./Coin";
 import Board from "./Board";
 
@@ -10,34 +11,13 @@ const defaultGameOptions = {
 
 const defaultPlayers = [CoinType.RED, CoinType.GREEN, CoinType.YELLOW, CoinType.BLUE];
 
-const playerStartPositions = {
-    [CoinType.RED]: { row: 4, col: 4 },
-    [CoinType.GREEN]: { row: 4, col: 13 },
-    [CoinType.YELLOW]: { row: 13, col: 13 },
-    [CoinType.BLUE]: { row: 13, col: 4 }
-};
-
-const playerTrackStartPositions = {
-    [CoinType.RED]: { row: 8, col: 3 },
-    [CoinType.GREEN]: { row: 3, col: 10 },
-    [CoinType.YELLOW]: { row: 10, col: 15 },
-    [CoinType.BLUE]: { row: 15, col: 8 }
-};
 
 const generatePlayerCoins = (players, canvas) => {
     const coins = {};
     players.forEach((playerType) => {
-        const {
-            row,
-            col
-        } = playerStartPositions[playerType];
-
-        coins[playerType] = [
-            new Coin(canvas, playerType, row, col),
-            new Coin(canvas, playerType, row, col + 1),
-            new Coin(canvas, playerType, row + 1, col),
-            new Coin(canvas, playerType, row + 1, col + 1)
-        ];
+        coins[playerType] = playerStartPositions[playerType].map(
+            position => new Coin(canvas, playerType, position.row, position.col)
+        );
     });
     return coins;
 };
@@ -49,6 +29,7 @@ export default class Game {
         this.currentPlayerIndex = 0;
         this.board = new Board(canvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
         this.playerCoins = generatePlayerCoins(this.players, canvas);
+        this.playerNameDiv = document.querySelector(".playerName");
     }
 
     /**
@@ -62,7 +43,36 @@ export default class Game {
         }
     }
 
+    /**
+     * Gets the current player indentifier
+     * @returns {String} The current player indentifier string
+     */
+    getCurrentPlayer() {
+        return this.players[this.currentPlayerIndex];
+    }
+
+    throwDice() {
+        const player = this.getCurrentPlayer();
+        const coins = this.playerCoins[player];
+        const isAllIn = coins.every((coin, index) => {
+            const startPosition = playerStartPositions[player][index];
+            const location = coin.getLocation();
+            return location.row === startPosition.row && location.col === startPosition.col;
+        });
+
+        console.log(isAllIn);
+    };
+
+    /**
+     * @inheritdoc
+     */
     render() {
+        this.playerNameDiv.textContent = [
+            "Current player: Player",
+            this.currentPlayerIndex + 1,
+            `(${this.getCurrentPlayer()})`
+        ].join(" ");
+
         this.board.draw();
         Object.keys(this.playerCoins).forEach(player => this.playerCoins[player].forEach(coin => coin.draw()));
     }

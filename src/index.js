@@ -14,9 +14,14 @@ import {
 import Dice from "./core/Dice";
 import Game from "./core/Game";
 
+let game;
 const startGame = () => {
-    const game = new Game(canvas);
+    game = new Game(canvas);
     game.render();
+};
+
+window.throwDice = () => {
+    game.throwDice();
 };
 
 window.onload = () => {

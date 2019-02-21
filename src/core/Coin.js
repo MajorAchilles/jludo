@@ -11,9 +11,22 @@ export default class Coin extends GameObject {
     }
 
     move(row, column) {
+        this.row = row;
+        this.col = column;
         const left = (column * getCellWidth()) - (getCellWidth() / 2);
         const top = (row * getCellHeight()) - (getCellHeight() / 2);
         this.setRenderOrigin(left, top);
+    }
+
+    /**
+     * Gets the current location of the coin
+     * @returns {Object} An object containing the current row and column of the coin
+     */
+    getLocation() {
+        return {
+            row: this.row,
+            col: this.col
+        };
     }
 
     /**
