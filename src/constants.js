@@ -1,8 +1,6 @@
 /* global document */
-const canvas = document.querySelector(".board");
-const context = canvas.getContext("2d");
+const boardCanvas = document.querySelector(".board");
 const diceCanvas = document.querySelector(".dice");
-const diceContext = diceCanvas.getContext("2d");
 
 const CellType = {
     GREEN: "CellType::Green",
@@ -22,8 +20,8 @@ const CoinType = {
 
 
 const dimensions = {
-    BOARD_HEIGHT: canvas.height,
-    BOARD_WIDTH: canvas.width,
+    BOARD_HEIGHT: boardCanvas.height,
+    BOARD_WIDTH: boardCanvas.width,
     ROW_COUNT: 17,
     COLUMN_COUNT: 17,
     CELL_OFFSET: 0
@@ -89,13 +87,11 @@ const timing = {
 };
 
 export {
-    canvas,
+    boardCanvas,
     CellType,
     CoinType,
     colors,
-    context,
     diceCanvas,
-    diceContext,
     dimensions,
     playerStartPositions,
     playerTrackStartPositions,

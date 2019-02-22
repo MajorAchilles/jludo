@@ -1,6 +1,6 @@
 /* globals */
 import GameObject from "./GameObject";
-import { getDiceContext, getDiceValue } from "../lib/utils";
+import { getDiceValue } from "../lib/utils";
 
 const RED = "#FF0000";
 const BLACK = "#000000";
@@ -39,7 +39,7 @@ export default class Dice extends GameObject {
      * @inherit
      */
     render() {
-        const context = getDiceContext();
+        const context = this.getContext();
         context.font = "40px Arial";
         context.fillStyle = this.diceFace === 6 ? RED : BLACK;
         context.fillText(this.diceFace, 40, 60);

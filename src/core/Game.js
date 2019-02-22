@@ -1,8 +1,9 @@
 /* globals document */
-import { CoinType, dimensions, playerStartPositions, diceCanvas } from "../constants";
+import { CoinType, dimensions, playerStartPositions } from "../constants";
 import Coin from "./Coin";
 import Board from "./Board";
 import Dice from "./Dice";
+import { getDiceCanvas } from "../lib/utils";
 
 const defaultGameOptions = {
     escapeOn: 6,
@@ -28,7 +29,7 @@ export default class Game {
         this.gameOptions = Object.assign({}, defaultGameOptions, gameOptions);
         this.currentPlayerIndex = 0;
         this.board = new Board(canvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
-        this.dice = new Dice(diceCanvas);
+        this.dice = new Dice(getDiceCanvas());
         this.playerCoins = generatePlayerCoins(this.players, canvas);
         this.playerNameDiv = document.querySelector(".playerName");
     }
@@ -59,7 +60,7 @@ export default class Game {
     throwDice() {
         this.dice.throw();
         this.render();
-    };
+    }
 
     /**
      * @inheritdoc

@@ -2,10 +2,8 @@
 import {
     colors,
     dimensions,
-    context,
-    canvas,
     diceCanvas,
-    diceContext
+    boardCanvas
 } from "../constants";
 
 const {
@@ -28,28 +26,23 @@ const getCellHeight = () => BOARD_HEIGHT / ROW_COUNT;
 const getCellWidth = () => BOARD_WIDTH / COLUMN_COUNT;
 
 /**
- * This function returns the global context
- * @returns {CanvasRenderingContext2D} The global context.
+ * This function returns the context of the given context
+ * @param {HTMLCanvasElement} targetCanvas The canvas to get the context for.
+ * @returns {CanvasRenderingContext2D} The canvas rendering context.
  */
-const getContext = () => context;
+const getContext = targetCanvas => targetCanvas.getContext("2d");
 
 /**
- * This function returns the global canvas
- * @returns {HTMLCanvasElement} The global dice canvas.
+ * This function returns the dice canvas
+ * @returns {HTMLCanvasElement} The dice canvas.
  */
 const getDiceCanvas = () => diceCanvas;
 
 /**
- * This function returns the global dice context
- * @returns {CanvasRenderingContext2D} The global dice context.
+ * This function returns the board dice canvas
+ * @returns {HTMLCanvasElement} The board canvas.
  */
-const getDiceContext = () => diceContext;
-
-/**
- * This function returns the global dice canvas
- * @returns {HTMLCanvasElement} The global canvas.
- */
-const getCanvas = () => canvas;
+const getBoardCanvas = () => boardCanvas;
 
 /**
  * Gets an unique pseudorandom identifier string
@@ -76,7 +69,7 @@ const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
 /**
  * Converts the canvas to an image and rewrites the document
  */
-const canvasToImage = () => document.write(`<img src="${getCanvas().toDataURL("image/png")}"/>`);
+const canvasToImage = () => document.write(`<img src="${getBoardCanvas().toDataURL("image/png")}"/>`);
 
 /**
  * Returns the location of the click in row and column indices
@@ -84,8 +77,8 @@ const canvasToImage = () => document.write(`<img src="${getCanvas().toDataURL("i
  * @returns {Object} An object cointaining the row and column index.
  */
 const getClickLocation = (clickEvent) => {
-    const left = clickEvent.pageX - getCanvas().offsetLeft;
-    const top = clickEvent.pageY - getCanvas().offsetTop;
+    const left = clickEvent.pageX - getBoardCanvas().offsetLeft;
+    const top = clickEvent.pageY - getBoardCanvas().offsetTop;
     const row = Math.floor(top / getCellHeight()) + 1;
     const col = Math.floor(left / getCellWidth()) + 1;
 
@@ -100,7 +93,7 @@ const getDiceValue = () => Math.floor(Math.random() * 6) + 1;
 
 export {
     canvasToImage,
-    getCanvas,
+    getBoardCanvas,
     getCellColor,
     getCellHeight,
     getCellWidth,
@@ -108,7 +101,6 @@ export {
     getCoinColor,
     getContext,
     getDiceCanvas,
-    getDiceContext,
     getDiceValue,
     getUUID
 };
