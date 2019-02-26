@@ -39,45 +39,55 @@ const generatePlayerCoins = (players, canvas) => {
  * @param {Number} diceValue The current dice value.
  */
 const getPlayableCoins = (player, coins, track, diceValue) => {
-    console.log({
-        player,
-        coins,
-        track,
-        diceValue
-    });
-
     // Not in terminal tracks
     const playerCoins = coins[player];
 
+    // Returns the indexes of the coins IF they are in the track. If not in track the only legal location for them is the
+    // Starting positions.
     const trackIndexes = playerCoins.map((coin) => {
         let trackIndex;
         track.some((position, index) => {
+            // If we find the track index, return that value.
             if (position.row === coin.row && position.col === coin.col) {
                 trackIndex = index;
                 return true;
             }
             return false;
         });
-        return trackIndex || -1;
+        return trackIndex || -1; // If in track, return index, else, -1.
     });
 
+    // Holds the unplayable coins, which we can use to filter out the playable only coins
     const unplayableCoins = [];
 
+    // Every coin maps to the index value in the track
+    // So, either, they are in the starting position, and hence playable, if dice value is 6.
+    // Or in some track position, which we need to verify and see if the current value makes them playable.
     trackIndexes.forEach((index) => {
+        // This coin is not in track and hence, is playable.
         if (index < 0 || index >= track.length) {
             return;
         }
 
+        // Get the track data.
         const position = track[index];
+
+        // If in terminal, cannot play that coin any more.
         if (position.isTerminal) {
             unplayableCoins.push(playerCoins[index]);
             return;
         }
 
-
+        // If not in terminal, we need to figure out if the current location + dice value is a legal postion to move to.
     });
 
-    console.log(trackIndexes);
+    console.log({
+        player,
+        coins,
+        track,
+        diceValue,
+        trackIndexes
+    });
 
     return [];
 };

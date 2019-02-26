@@ -13,6 +13,33 @@ const {
     COLUMN_COUNT
 } = dimensions;
 
+const getNextTrackSegment = (track, currentTrackIndex, diceValue) => {
+    const currentPosition = track[currentTrackIndex];
+
+    // if (currentTrackIndex)
+};
+
+/**
+ * Gets the next track index value
+ * @param {Array<Object>} track The track array
+ * @param {Number} currentTrackIndex The current index
+ * @param {String} coinType The coint type for which calculation is being made.
+ * @returns The next track idne
+ */
+const getNextTrackIndex = (track, currentTrackIndex, coinType) => {
+    if (currentTrackIndex + 1 === track.length) {
+        return 0;
+    } else {
+        const nextIndex = currentTrackIndex + 1;
+        const nextPosition = track[nextIndex];
+        if (nextPosition.coinType === CoinType.ALL || nextPosition.coinType === coinType) {
+            return nextIndex;
+        } else {
+            return getNextTrackIndex(track, nextIndex, coinType);
+        }
+    }
+}
+
 /**
  * Converts the canvas to an image and rewrites the document
  */
