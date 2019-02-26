@@ -14,6 +14,23 @@ const {
 } = dimensions;
 
 /**
+ * Converts the canvas to an image and rewrites the document
+ */
+const canvasToImage = () => document.write(`<img src="${getBoardCanvas().toDataURL("image/png")}"/>`);
+
+/**
+ * Disables the throw button
+ * @returns {undefined} This function doesn't return anything.
+ */
+const disableThrowButton = () => document.querySelector("#throwDice").setAttribute("disabled", true);
+
+/**
+ * Enables the throw button
+ * @returns {undefined} This function doesn't return anything.
+ */
+const enableThrowButton = () => document.querySelector("#throwDice").removeAttribute("disabled");
+
+/**
  * Gets the cell height
  * @returns {Number} The cell height
  */
@@ -67,11 +84,6 @@ const getCellColor = cellType => colors.CellFillColorMap[cellType];
 const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
 
 /**
- * Converts the canvas to an image and rewrites the document
- */
-const canvasToImage = () => document.write(`<img src="${getBoardCanvas().toDataURL("image/png")}"/>`);
-
-/**
  * Returns the location of the click in row and column indices
  * @param {Event} clickEvent The click event data
  * @returns {Object} An object cointaining the row and column index.
@@ -93,6 +105,8 @@ const getDiceValue = () => Math.floor(Math.random() * 6) + 1;
 
 export {
     canvasToImage,
+    disableThrowButton,
+    enableThrowButton,
     getBoardCanvas,
     getCellColor,
     getCellHeight,

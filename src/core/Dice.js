@@ -21,6 +21,14 @@ export default class Dice extends GameObject {
     }
 
     /**
+     * This gets the dice face value
+     * @returns {Number} The dice face value
+     */
+    getDiceFace() {
+        return this.diceFace;
+    }
+
+    /**
      * Throws the dice value
      * @returns {undefined} This function doesn't return anything.
      */
