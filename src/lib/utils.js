@@ -3,7 +3,8 @@ import {
     colors,
     dimensions,
     diceCanvas,
-    boardCanvas
+    boardCanvas,
+    CoinType
 } from "../constants";
 
 const {
@@ -13,32 +14,51 @@ const {
     COLUMN_COUNT
 } = dimensions;
 
-const getNextTrackSegment = (track, currentTrackIndex, diceValue) => {
-    const currentPosition = track[currentTrackIndex];
-
-    // if (currentTrackIndex)
-};
-
 /**
  * Gets the next track index value
  * @param {Array<Object>} track The track array
  * @param {Number} currentTrackIndex The current index
- * @param {String} coinType The coint type for which calculation is being made.
- * @returns The next track idne
+ * @param {String} coinType The coin type for which calculation is being made.
+ * @returns The next track index
  */
 const getNextTrackIndex = (track, currentTrackIndex, coinType) => {
+    // If this is the last position on the track, we need to reset the index to the beginning.
     if (currentTrackIndex + 1 === track.length) {
         return 0;
-    } else {
-        const nextIndex = currentTrackIndex + 1;
-        const nextPosition = track[nextIndex];
-        if (nextPosition.coinType === CoinType.ALL || nextPosition.coinType === coinType) {
-            return nextIndex;
-        } else {
-            return getNextTrackIndex(track, nextIndex, coinType);
-        }
     }
-}
+
+    const nextIndex = currentTrackIndex + 1;
+    const nextPosition = track[nextIndex];
+    // If the next position is a valid one for the current coin type, or is allowed for all coin types, then return that index
+    if (nextPosition.coinType === CoinType.ALL || nextPosition.coinType === coinType) {
+        return nextIndex;
+    }
+
+    // If not valid, then return the next valid track index.
+    return getNextTrackIndex(track, nextIndex, coinType);
+};
+
+
+/**
+ * Returns the next track segment for the coin to move in
+ * @param {Array<Object>} track The track array
+ * @param {Number} currentTrackIndex  The current index
+ * @param {Number} diceValue The value of the dice
+ * @param {String} coinType The coin type
+ * @returns {Array<object>} The array of positions for the coin to move in, in order.
+ */
+const getNextTrackSegment = (track, currentTrackIndex, diceValue, coinType) => {
+    const trackPositions = [];
+    for(let i = 0; i < diceValue, i++) {
+        trackPositions.push(track[getNextTrackIndex(track, currentTrackIndex, coinType)]);
+    }
+    
+    const isSegmentBeyondTerminal = trackPositions
+        .filter((position, index) => { return index < trackPositions.length - 1})
+        .some(position => position.isTerminal);
+
+    return isSegmentBeyondTerminal ? [] : trackPositions;
+};
 
 /**
  * Converts the canvas to an image and rewrites the document
@@ -143,5 +163,7 @@ export {
     getContext,
     getDiceCanvas,
     getDiceValue,
+    getNextTrackIndex,
+    getNextTrackSegment,
     getUUID
 };
