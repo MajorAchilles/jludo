@@ -1,10 +1,10 @@
 
-/* globals document */
+/* globals document, window */
 import { CoinType, dimensions, playerStartPositions } from "../constants";
 import Coin from "./Coin";
 import Board from "./Board";
 import Dice from "./Dice";
-import { getDiceCanvas } from "../lib/utils";
+import { getDiceCanvas, getNextTrackSegment, getContext, getCellHeight, getCellWidth, disableThrowButton, addClickHandler, enableThrowButton, getClickLocation, listenToClick } from "../lib/utils";
 import { generateTrack } from "../state";
 
 const defaultGameOptions = {
@@ -63,14 +63,14 @@ const getPlayableCoins = (player, coins, track, diceValue) => {
     // Every coin maps to the index value in the track
     // So, either, they are in the starting position, and hence playable, if dice value is 6.
     // Or in some track position, which we need to verify and see if the current value makes them playable.
-    trackIndexes.forEach((index) => {
+    trackIndexes.forEach((trackIndex, index) => {
         // This coin is not in track and hence, is playable.
-        if (index < 0 || index >= track.length) {
+        if (trackIndex < 0 || trackIndex >= track.length) {
             return;
         }
 
         // Get the track data.
-        const position = track[index];
+        const position = track[trackIndex];
 
         // If in terminal, cannot play that coin any more.
         if (position.isTerminal) {
@@ -79,29 +79,38 @@ const getPlayableCoins = (player, coins, track, diceValue) => {
         }
 
         // If not in terminal, we need to figure out if the current location + dice value is a legal postion to move to.
+        const nextTrackSegment = getNextTrackSegment(track, trackIndex, diceValue, player);
+        if (!nextTrackSegment.length) {
+            unplayableCoins.push(playerCoins[index]);
+        }
     });
 
-    console.log({
-        player,
-        coins,
-        track,
-        diceValue,
-        trackIndexes
-    });
+    // console.log({
+    //     player,
+    //     coins,
+    //     track,
+    //     diceValue,
+    //     trackIndexes,
+    //     unplayableCoins
+    // });
 
-    return [];
+    return playerCoins.filter((coin) => {
+        return unplayableCoins.indexOf(coin) === -1;
+    });
 };
 
 export default class Game {
     constructor(boardCanvas, players, gameOptions) {
+        this.boardCanvas = boardCanvas;
         this.players = players || defaultPlayers;
         this.gameOptions = Object.assign({}, defaultGameOptions, gameOptions);
         this.currentPlayerIndex = 0;
-        this.board = new Board(boardCanvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
+        this.board = new Board(this.boardCanvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
         this.dice = new Dice(getDiceCanvas());
         this.playerCoins = generatePlayerCoins(this.players, boardCanvas);
         this.playerNameDiv = document.querySelector(".playerName");
         this.track = generateTrack();
+        this.reRenderBoard = true;
     }
 
     /**
@@ -127,14 +136,16 @@ export default class Game {
     /**
      * @inheritdoc
      */
-    render() {
+    render(reRenderBoard = true) {
         this.playerNameDiv.textContent = [
             "Current player: Player",
             this.currentPlayerIndex + 1,
             `(${this.getCurrentPlayer()})`
         ].join(" ");
 
-        this.board.draw();
+        if (reRenderBoard) {
+            this.board.draw();
+        }
         this.dice.draw();
         Object.keys(this.playerCoins).forEach(player => this.playerCoins[player].forEach(coin => coin.draw()));
     }
@@ -151,10 +162,52 @@ export default class Game {
         const playableCoins = getPlayableCoins(currentPlayer, this.playerCoins, this.track, this.dice.getDiceFace());
 
         if (playableCoins.length) {
-            // Wait for player selection
+            // Show selectable windows
+            this.renderSelectionWindows(playableCoins.map((coin) => {
+                return {
+                    row: coin.row,
+                    col: coin.col
+                };
+            }));
+            // this.render(false);
+
+            // Remove throw button
+            disableThrowButton();
+            listenToClick().then((location) => {
+                console.log(location);
+                this.reRenderBoard = true;
+                this.setNextPlayer();
+                enableThrowButton();
+                this.render();
+            });
         } else {
+            window.alert("Sorry! No playable coins for you!"); // eslint-disable-line no-alert
             this.setNextPlayer();
+            this.render();
         }
-        this.render();
+    }
+
+    /**
+     * Renders the selection window in the given cells.
+     * @param {Array<Object>} cells The cells to render selection window for.
+     * @returns {undefined} This function doesn't return anything.
+     */
+    renderSelectionWindows(cells) {
+        const boardContext = getContext(this.boardCanvas);
+
+        const width = getCellWidth();
+        const height = getCellHeight();
+
+        cells.forEach((cell) => {
+            const left = (cell.row - 1) * width;
+            const top = (cell.col - 1) * height;
+
+            boardContext.beginPath();
+            boardContext.strokeStyle = "#34AE33";
+            boardContext.lineWidth = 2;
+            boardContext.rect(left, top, width, height);
+            boardContext.stroke();
+            boardContext.closePath();
+        });
     }
 }

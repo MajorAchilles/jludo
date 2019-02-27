@@ -14,6 +14,35 @@ const {
     COLUMN_COUNT
 } = dimensions;
 
+
+/**
+ * Adds the click handler function
+ * @param {Function} clickHandler The function that handles the click location.
+ * @returns {undefined} This function doesn't return anything.
+ */
+const addClickHandler = (clickHandler) => {
+    boardCanvas.addEventListener("click", clickHandler);
+};
+
+/**
+ * Removes the click handler function
+ * @returns {undefined} This function doesn't return anything
+ */
+const removeClickHandler = (clickHandler) => {
+    boardCanvas.removeEventListener("click", clickHandler);
+};
+
+const listenToClick = () => {
+    return new Promise((resolve) => {
+        const handler = (event) => {
+            removeClickHandler(handler);
+            resolve(getClickLocation(event));
+        };
+
+        addClickHandler(handler);
+    });
+};
+
 /**
  * Gets the next track index value
  * @param {Array<Object>} track The track array
@@ -49,12 +78,12 @@ const getNextTrackIndex = (track, currentTrackIndex, coinType) => {
  */
 const getNextTrackSegment = (track, currentTrackIndex, diceValue, coinType) => {
     const trackPositions = [];
-    for(let i = 0; i < diceValue, i++) {
+    for (let i = 0; i < diceValue; i++) {
         trackPositions.push(track[getNextTrackIndex(track, currentTrackIndex, coinType)]);
     }
-    
+
     const isSegmentBeyondTerminal = trackPositions
-        .filter((position, index) => { return index < trackPositions.length - 1})
+        .filter((_, index) => { return index < trackPositions.length - 1; })
         .some(position => position.isTerminal);
 
     return isSegmentBeyondTerminal ? [] : trackPositions;
@@ -151,6 +180,7 @@ const getClickLocation = (clickEvent) => {
 const getDiceValue = () => Math.floor(Math.random() * 6) + 1;
 
 export {
+    addClickHandler,
     canvasToImage,
     disableThrowButton,
     enableThrowButton,
@@ -165,5 +195,7 @@ export {
     getDiceValue,
     getNextTrackIndex,
     getNextTrackSegment,
-    getUUID
+    getUUID,
+    listenToClick,
+    removeClickHandler
 };
