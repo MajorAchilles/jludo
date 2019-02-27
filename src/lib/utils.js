@@ -79,7 +79,7 @@ const getNextTrackIndex = (track, currentTrackIndex, coinType) => {
 const getNextTrackSegment = (track, currentTrackIndex, diceValue, coinType) => {
     const trackPositions = [];
     for (let i = 0; i < diceValue; i++) {
-        trackPositions.push(track[getNextTrackIndex(track, currentTrackIndex, coinType)]);
+        trackPositions.push(track[getNextTrackIndex(track, currentTrackIndex + i, coinType)]);
     }
 
     const isSegmentBeyondTerminal = trackPositions
@@ -87,6 +87,27 @@ const getNextTrackSegment = (track, currentTrackIndex, diceValue, coinType) => {
         .some(position => position.isTerminal);
 
     return isSegmentBeyondTerminal ? [] : trackPositions;
+};
+
+/**
+ * This function gives the index of the track location
+ * @param {Array<object>} track The track array
+ * @param {Number} row  The row value
+ * @param {Number} col The column value
+ * @returns {Number} The index is found, else -1
+ */
+const getTrackIndexByLocation = (track, row, col) => {
+    let trackIndex = -1;
+
+    track.some((position, index) => {
+        if (position.row === row && position.col === col) {
+            trackIndex = index;
+            return true;
+        }
+        return false;
+    });
+
+    return trackIndex;
 };
 
 /**
@@ -195,6 +216,7 @@ export {
     getDiceValue,
     getNextTrackIndex,
     getNextTrackSegment,
+    getTrackIndexByLocation,
     getUUID,
     listenToClick,
     removeClickHandler

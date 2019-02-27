@@ -8,6 +8,8 @@ export default class Coin extends GameObject {
         this.coinType = coinType;
         this.coinColor = getCoinColor(this.coinType);
         this.trackIndex = -1;
+        this.startRow = startRow;
+        this.startCol = startCol;
         this.move(startRow, startCol);
     }
 

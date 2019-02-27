@@ -1,10 +1,10 @@
 
 /* globals document, window */
-import { CoinType, dimensions, playerStartPositions } from "../constants";
+import { CoinType, dimensions, playerStartPositions, playerTrackStartPositions } from "../constants";
 import Coin from "./Coin";
 import Board from "./Board";
 import Dice from "./Dice";
-import { getDiceCanvas, getNextTrackSegment, getContext, getCellHeight, getCellWidth, disableThrowButton, addClickHandler, enableThrowButton, getClickLocation, listenToClick } from "../lib/utils";
+import { getDiceCanvas, getNextTrackSegment, getContext, getCellHeight, getCellWidth, disableThrowButton, addClickHandler, enableThrowButton, getClickLocation, listenToClick, getTrackIndexByLocation } from "../lib/utils";
 import { generateTrack } from "../state";
 
 const defaultGameOptions = {
@@ -43,19 +43,8 @@ const getPlayableCoins = (player, coins, track, diceValue) => {
     const playerCoins = coins[player];
 
     // Returns the indexes of the coins IF they are in the track. If not in track the only legal location for them is the
-    // Starting positions.
-    const trackIndexes = playerCoins.map((coin) => {
-        let trackIndex;
-        track.some((position, index) => {
-            // If we find the track index, return that value.
-            if (position.row === coin.row && position.col === coin.col) {
-                trackIndex = index;
-                return true;
-            }
-            return false;
-        });
-        return trackIndex || -1; // If in track, return index, else, -1.
-    });
+    // Starting positions inside the start box, given dice value is 6.
+    const trackIndexes = playerCoins.map(coin => getTrackIndexByLocation(track, coin.row, coin.col));
 
     // Holds the unplayable coins, which we can use to filter out the playable only coins
     const unplayableCoins = [];
@@ -64,8 +53,12 @@ const getPlayableCoins = (player, coins, track, diceValue) => {
     // So, either, they are in the starting position, and hence playable, if dice value is 6.
     // Or in some track position, which we need to verify and see if the current value makes them playable.
     trackIndexes.forEach((trackIndex, index) => {
+        const currentCoin = playerCoins[index];
         // This coin is not in track and hence, is playable.
         if (trackIndex < 0 || trackIndex >= track.length) {
+            if (diceValue !== 6) {
+                unplayableCoins.push(currentCoin);
+            }
             return;
         }
 
@@ -74,25 +67,16 @@ const getPlayableCoins = (player, coins, track, diceValue) => {
 
         // If in terminal, cannot play that coin any more.
         if (position.isTerminal) {
-            unplayableCoins.push(playerCoins[index]);
+            unplayableCoins.push(currentCoin);
             return;
         }
 
         // If not in terminal, we need to figure out if the current location + dice value is a legal postion to move to.
         const nextTrackSegment = getNextTrackSegment(track, trackIndex, diceValue, player);
         if (!nextTrackSegment.length) {
-            unplayableCoins.push(playerCoins[index]);
+            unplayableCoins.push(currentCoin);
         }
     });
-
-    // console.log({
-    //     player,
-    //     coins,
-    //     track,
-    //     diceValue,
-    //     trackIndexes,
-    //     unplayableCoins
-    // });
 
     return playerCoins.filter((coin) => {
         return unplayableCoins.indexOf(coin) === -1;
@@ -175,6 +159,20 @@ export default class Game {
             disableThrowButton();
             listenToClick().then((location) => {
                 console.log(location);
+                const targetCoin = this.playerCoins[currentPlayer].filter(coin => coin.row === location.row && coin.col === location.col)[0];
+                if (targetCoin.row === targetCoin.startRow && targetCoin.col === targetCoin.startCol) {
+                    const trackStartPosition = playerTrackStartPositions[currentPlayer];
+                    targetCoin.move(trackStartPosition.row, trackStartPosition.col);
+                } else {
+                    const nextTrackSegment = getNextTrackSegment(
+                        this.track,
+                        getTrackIndexByLocation(this.track, targetCoin.row, targetCoin.col),
+                        this.dice.getDiceFace(),
+                        currentPlayer
+                    );
+                    const lastLocation = nextTrackSegment.pop();
+                    targetCoin.move(lastLocation.row, lastLocation.col);
+                }
                 this.reRenderBoard = true;
                 this.setNextPlayer();
                 enableThrowButton();
@@ -199,8 +197,8 @@ export default class Game {
         const height = getCellHeight();
 
         cells.forEach((cell) => {
-            const left = (cell.row - 1) * width;
-            const top = (cell.col - 1) * height;
+            const left = (cell.col - 1) * width;
+            const top = (cell.row - 1) * height;
 
             boardContext.beginPath();
             boardContext.strokeStyle = "#34AE33";
