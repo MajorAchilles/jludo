@@ -78,8 +78,10 @@ const getNextTrackIndex = (track, currentTrackIndex, coinType) => {
  */
 const getNextTrackSegment = (track, currentTrackIndex, diceValue, coinType) => {
     const trackPositions = [];
+    let trackIndex = currentTrackIndex;
     for (let i = 0; i < diceValue; i++) {
-        trackPositions.push(track[getNextTrackIndex(track, currentTrackIndex + i, coinType)]);
+        trackIndex = getNextTrackIndex(track, trackIndex, coinType);
+        trackPositions.push(track[trackIndex]);
     }
 
     const isSegmentBeyondTerminal = trackPositions
