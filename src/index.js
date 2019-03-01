@@ -5,31 +5,34 @@ import {
 import Coin from "./core/Coin";
 import Board from "./core/Board";
 import {
-    canvas,
     CoinType,
     timing,
-    dimensions,
-    diceCanvas
+    dimensions
 } from "./constants";
-import Dice from "./core/Dice";
 import Game from "./core/Game";
+import { getBoardCanvas } from "./lib/utils";
 
+let game;
+const boardCanvas = getBoardCanvas();
 const startGame = () => {
-    const game = new Game(canvas);
+    game = new Game(boardCanvas);
     game.render();
 };
 
-window.onload = () => {
-    const board = new Board(canvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
+window.throwDice = () => {
+    game.throwDice();
+};
 
-    const testCoin = new Coin(canvas, CoinType.YELLOW);
-    const dice = new Dice(diceCanvas);
+const test = () => {
+    const board = new Board(boardCanvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
+
+    const testCoin = new Coin(boardCanvas, CoinType.YELLOW);
     let index = 0;
 
     const { track } = board;
 
-    const testInterval = setInterval(() => {
-        clearCanvas();
+    return setInterval(() => {
+        clearCanvas(boardCanvas);
         board.render();
         testCoin.move(track[index].row, track[index].col);
         index++;
@@ -37,13 +40,15 @@ window.onload = () => {
             index = 0;
         }
 
-        dice.draw();
         testCoin.draw();
     }, timing.TIME_PER_FRAME);
+};
 
+window.onload = () => {
+    const testInterval = test();
     setTimeout(() => {
         clearInterval(testInterval);
-        clearCanvas();
+        clearCanvas(boardCanvas);
         startGame();
     }, 2000);
 };

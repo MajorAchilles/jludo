@@ -1,11 +1,13 @@
 /* globals */
 import GameObject from "./GameObject";
-import { diceCanvas } from "../constants";
-import { getDiceContext } from "../lib/utils";
+import { getDiceValue } from "../lib/utils";
+
+const RED = "#FF0000";
+const BLACK = "#000000";
 
 export default class Dice extends GameObject {
-    constructor() {
-        super(diceCanvas);
+    constructor(canvas) {
+        super(canvas);
         this.diceFace = 6;
     }
 
@@ -19,11 +21,35 @@ export default class Dice extends GameObject {
     }
 
     /**
+     * This gets the dice face value
+     * @returns {Number} The dice face value
+     */
+    getDiceFace() {
+        return this.diceFace;
+    }
+
+    /**
+     * Throws the dice value
+     * @returns {undefined} This function doesn't return anything.
+     */
+    throw() {
+        this.setDiceFace(getDiceValue());
+    }
+
+    /**
+     * @inherit
+     */
+    preRender() {
+        this.canvas.height = this.canvas.height;
+    }
+
+    /**
      * @inherit
      */
     render() {
-        const context = getDiceContext();
+        const context = this.getContext();
         context.font = "40px Arial";
+        context.fillStyle = this.diceFace === 6 ? RED : BLACK;
         context.fillText(this.diceFace, 40, 60);
     }
 }

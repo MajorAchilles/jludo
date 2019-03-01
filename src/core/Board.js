@@ -1,7 +1,6 @@
 /* globals document */
 import GameObject from "./GameObject";
 import { dimensions } from "../constants";
-import { getContext } from "../lib/utils";
 import { generateTrack } from "../state";
 
 export default class Board extends GameObject {
@@ -17,7 +16,7 @@ export default class Board extends GameObject {
      * @inherit
      */
     render() {
-        getContext().drawImage(
+        this.getContext().drawImage(
             this.backgroundImage,
             0,
             0,

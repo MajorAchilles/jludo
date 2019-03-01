@@ -1,16 +1,15 @@
 /* global document */
 import {
     colors,
-    context,
     dimensions
 } from "./constants";
 
 import {
-    getCanvas,
     getCellHeight,
     getCellWidth,
     getCellColor,
-    getContext
+    getContext,
+    getBoardCanvas
 } from "./lib/utils";
 
 import { getBoardMask, getSafeZoneMask } from "./state";
@@ -22,25 +21,31 @@ const {
     BOARD_WIDTH
 } = dimensions;
 
-const clearCanvas = () => {
-    const canvas = getCanvas();
-    canvas.width = canvas.width;
-    canvas.height = canvas.height;
+const boardContext = getContext(getBoardCanvas());
+
+/**
+ * This function clears the given canvas
+ * @param {HTMLCanvasElement} canvas The canvas to be cleared
+ * @returns {undefined} This function doesn't return anything
+ */
+const clearCanvas = (canvas) => {
+    canvas.width = canvas.width; // eslint-disable-line no-param-reassign
+    canvas.height = canvas.height; // eslint-disable-line no-param-reassign
 };
 
 const renderCell = (left, top, width, height, color) => {
-    context.beginPath();
-    context.lineWidth = 1;
-    context.strokeStyle = colors.BoundaryColor;
-    context.strokeRect(left, top, width, height);
+    boardContext.beginPath();
+    boardContext.lineWidth = 1;
+    boardContext.strokeStyle = colors.BoundaryColor;
+    boardContext.strokeRect(left, top, width, height);
 
-    context.beginPath();
-    context.fillStyle = color;
-    context.fillRect(left, top, width, height);
+    boardContext.beginPath();
+    boardContext.fillStyle = color;
+    boardContext.fillRect(left, top, width, height);
 };
 
 const renderSafeCircle = (left, top, width) => {
-    context.drawImage(
+    boardContext.drawImage(
         document.getElementById("safeStar"),
         left + 5,
         top + 5,
@@ -80,20 +85,20 @@ const renderBoard = () => {
         top += cellHeight;
     }
 
-    context.beginPath();
-    context.lineWidth = 10;
-    context.strokeStyle = colors.BoundaryColor;
-    context.strokeRect(
+    boardContext.beginPath();
+    boardContext.lineWidth = 10;
+    boardContext.strokeStyle = colors.BoundaryColor;
+    boardContext.strokeRect(
         0,
         0,
         BOARD_WIDTH,
         BOARD_HEIGHT
     );
 
-    context.beginPath();
-    context.lineWidth = 5;
-    context.strokeStyle = colors.BoundaryColor;
-    context.strokeRect(
+    boardContext.beginPath();
+    boardContext.lineWidth = 5;
+    boardContext.strokeStyle = colors.BoundaryColor;
+    boardContext.strokeRect(
         cellHeight * 1,
         cellWidth * 1,
         BOARD_WIDTH - (cellWidth * 2),

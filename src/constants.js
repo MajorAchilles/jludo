@@ -1,8 +1,6 @@
 /* global document */
-const canvas = document.querySelector(".board");
-const context = canvas.getContext("2d");
+const boardCanvas = document.querySelector(".board");
 const diceCanvas = document.querySelector(".dice");
-const diceContext = diceCanvas.getContext("2d");
 
 const CellType = {
     GREEN: "CellType::Green",
@@ -22,11 +20,46 @@ const CoinType = {
 
 
 const dimensions = {
-    BOARD_HEIGHT: canvas.height,
-    BOARD_WIDTH: canvas.width,
+    BOARD_HEIGHT: boardCanvas.height,
+    BOARD_WIDTH: boardCanvas.width,
     ROW_COUNT: 17,
     COLUMN_COUNT: 17,
     CELL_OFFSET: 0
+};
+
+
+const playerStartPositions = {
+    [CoinType.RED]: [
+        { row: 4, col: 4 },
+        { row: 4, col: 5 },
+        { row: 5, col: 4 },
+        { row: 5, col: 5 }
+    ],
+    [CoinType.GREEN]: [
+        { row: 4, col: 13 },
+        { row: 4, col: 14 },
+        { row: 5, col: 13 },
+        { row: 5, col: 14 }
+    ],
+    [CoinType.YELLOW]: [
+        { row: 13, col: 13 },
+        { row: 13, col: 14 },
+        { row: 14, col: 13 },
+        { row: 14, col: 14 }
+    ],
+    [CoinType.BLUE]: [
+        { row: 13, col: 4 },
+        { row: 13, col: 5 },
+        { row: 14, col: 4 },
+        { row: 14, col: 5 }
+    ]
+};
+
+const playerTrackStartPositions = {
+    [CoinType.RED]: { row: 8, col: 3 },
+    [CoinType.GREEN]: { row: 3, col: 10 },
+    [CoinType.YELLOW]: { row: 10, col: 15 },
+    [CoinType.BLUE]: { row: 15, col: 8 }
 };
 
 const colors = {
@@ -54,13 +87,13 @@ const timing = {
 };
 
 export {
-    canvas,
+    boardCanvas,
     CellType,
     CoinType,
     colors,
-    context,
     diceCanvas,
-    diceContext,
     dimensions,
+    playerStartPositions,
+    playerTrackStartPositions,
     timing
 };

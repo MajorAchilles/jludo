@@ -1,4 +1,4 @@
-import { getUUID } from "../lib/utils";
+import { getUUID, getContext } from "../lib/utils";
 import { dimensions } from "../constants";
 
 export default class GameObject {
@@ -11,7 +11,7 @@ export default class GameObject {
         this.uuid = getUUID();
         this.isRenderable = true;
         this.canvas = canvas;
-        this.context = this.canvas.getContext("2d");
+        this.context = getContext(canvas);
         this.top = 0;
         this.left = 0;
     }
@@ -71,7 +71,6 @@ export default class GameObject {
      */
     preRender() { // eslint-disable-line class-methods-use-this
     }
-
 
     /**
      * Renders the current GameObject

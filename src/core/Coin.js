@@ -7,13 +7,52 @@ export default class Coin extends GameObject {
         super(canvas);
         this.coinType = coinType;
         this.coinColor = getCoinColor(this.coinType);
+        this.trackIndex = -1;
+        this.startRow = startRow;
+        this.startCol = startCol;
         this.move(startRow, startCol);
     }
 
+    /**
+     * Sets the row and column value of the coin
+     * @param {Number} row The row to move to
+     * @param {Number} column The column to move to.
+     * @returns {undefined} This function doesn't return anything
+     */
     move(row, column) {
+        this.row = row;
+        this.col = column;
         const left = (column * getCellWidth()) - (getCellWidth() / 2);
         const top = (row * getCellHeight()) - (getCellHeight() / 2);
         this.setRenderOrigin(left, top);
+    }
+
+    /**
+     * Sets the track index
+     * @param {Number} index The track index
+     * @returns {undefined} This function doesn't return anything.
+     */
+    setTrackIndex(index) {
+        this.trackIndex = index;
+    }
+
+    /**
+     * Gets the current track index
+     * @returns {Number} The current track index
+     */
+    getTrackIndex() {
+        return this.trackIndex;
+    }
+
+    /**
+     * Gets the current location of the coin
+     * @returns {Object} An object containing the current row and column of the coin
+     */
+    getLocation() {
+        return {
+            row: this.row,
+            col: this.col
+        };
     }
 
     /**
