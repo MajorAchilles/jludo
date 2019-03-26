@@ -8,12 +8,12 @@
     },
     "scripts": {
         "lint": "eslint src",
-        "start": "npm run build:deploy",
+        "start": "http-server -p 80",
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack --mode production",
         "build:dev": "webpack --mode development",
         "build:cd": "nodemon --watch src --exec npm run build:deploy",
-        "build:deploy": "webpack && http-server -p 80",
+        "build:deploy": "webpack && npm run start",
         "build:watch": "nodemon --watch src --exec npm run build:dev"
     },
     "repository": {
