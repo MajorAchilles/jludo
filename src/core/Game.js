@@ -1,10 +1,24 @@
 
 /* globals document, window */
-import { CoinType, dimensions, playerStartPositions, playerTrackStartPositions } from "../constants";
+import {
+    CoinType, playerStartPositions, playerTrackStartPositions
+} from "../constants";
 import Coin from "./Coin";
 import Board from "./Board";
 import Dice from "./Dice";
-import { getDiceCanvas, getNextTrackSegment, getContext, getCellHeight, getCellWidth, disableThrowButton, addClickHandler, enableThrowButton, getClickLocation, listenToClick, getTrackIndexByLocation } from "../lib/utils";
+import {
+    getDiceCanvas,
+    getNextTrackSegment,
+    getContext,
+    getCellHeight,
+    getCellWidth,
+    disableThrowButton,
+    enableThrowButton,
+    listenToClick,
+    getTrackIndexByLocation,
+    getBoardHeight,
+    getBoardWidth
+} from "../lib/utils";
 import { generateTrack } from "../state";
 
 const defaultGameOptions = {
@@ -89,7 +103,7 @@ export default class Game {
         this.players = players || defaultPlayers;
         this.gameOptions = Object.assign({}, defaultGameOptions, gameOptions);
         this.currentPlayerIndex = 0;
-        this.board = new Board(this.boardCanvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
+        this.board = new Board(this.boardCanvas, getBoardWidth(), getBoardHeight());
         this.dice = new Dice(getDiceCanvas());
         this.playerCoins = generatePlayerCoins(this.players, boardCanvas);
         this.playerNameDiv = document.querySelector(".playerName");
@@ -153,13 +167,13 @@ export default class Game {
                     col: coin.col
                 };
             }));
-            // this.render(false);
 
             // Remove throw button
             disableThrowButton();
             listenToClick().then((location) => {
-                console.log(location);
-                const targetCoin = this.playerCoins[currentPlayer].filter(coin => coin.row === location.row && coin.col === location.col)[0];
+                const targetCoin = this.playerCoins[currentPlayer]
+                    .filter(coin => coin.row === location.row && coin.col === location.col)[0];
+
                 if (targetCoin.row === targetCoin.startRow && targetCoin.col === targetCoin.startCol) {
                     const trackStartPosition = playerTrackStartPositions[currentPlayer];
                     targetCoin.move(trackStartPosition.row, trackStartPosition.col);

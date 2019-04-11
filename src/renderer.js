@@ -9,16 +9,16 @@ import {
     getCellWidth,
     getCellColor,
     getContext,
-    getBoardCanvas
+    getBoardCanvas,
+    getBoardWidth,
+    getBoardHeight
 } from "./lib/utils";
 
 import { getBoardMask, getSafeZoneMask } from "./state";
 
 const {
     ROW_COUNT,
-    COLUMN_COUNT,
-    BOARD_HEIGHT,
-    BOARD_WIDTH
+    COLUMN_COUNT
 } = dimensions;
 
 const boardContext = getContext(getBoardCanvas());
@@ -91,8 +91,8 @@ const renderBoard = () => {
     boardContext.strokeRect(
         0,
         0,
-        BOARD_WIDTH,
-        BOARD_HEIGHT
+        getBoardWidth(),
+        getBoardHeight()
     );
 
     boardContext.beginPath();
@@ -101,8 +101,8 @@ const renderBoard = () => {
     boardContext.strokeRect(
         cellHeight * 1,
         cellWidth * 1,
-        BOARD_WIDTH - (cellWidth * 2),
-        BOARD_HEIGHT - (cellHeight * 2)
+        getBoardWidth() - (cellWidth * 2),
+        getBoardHeight() - (cellHeight * 2)
     );
 };
 

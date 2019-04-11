@@ -20,8 +20,6 @@ const CoinType = {
 
 
 const dimensions = {
-    BOARD_HEIGHT: boardCanvas.height,
-    BOARD_WIDTH: boardCanvas.width,
     ROW_COUNT: 17,
     COLUMN_COUNT: 17,
     CELL_OFFSET: 0

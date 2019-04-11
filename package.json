@@ -8,6 +8,7 @@
     },
     "scripts": {
         "lint": "eslint src",
+        "lint:fix": "eslint src --fix",
         "start": "http-server",
         "start:dev": "http-server -p 80",
         "test": "echo \"Error: no test specified\" && exit 0",

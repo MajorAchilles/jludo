@@ -8,12 +8,45 @@ import {
 } from "../constants";
 
 const {
-    BOARD_HEIGHT,
-    BOARD_WIDTH,
     ROW_COUNT,
     COLUMN_COUNT
 } = dimensions;
 
+/**
+ * This function returns the dice canvas
+ * @returns {HTMLCanvasElement} The dice canvas.
+ */
+const getDiceCanvas = () => diceCanvas;
+
+/**
+ * This function returns the board dice canvas
+ * @returns {HTMLCanvasElement} The board canvas.
+ */
+const getBoardCanvas = () => boardCanvas;
+
+/**
+ * Gets the board height
+ * @returns {Number} The board height
+ */
+const getBoardHeight = () => getBoardCanvas().height;
+
+/**
+ * Gets the board width
+ * @returns {Number} The board width
+ */
+const getBoardWidth = () => getBoardCanvas().width;
+
+/**
+ * Gets the cell height
+ * @returns {Number} The cell height
+ */
+const getCellHeight = () => getBoardHeight() / ROW_COUNT;
+
+/**
+ * Gets the cell width
+ * @returns {Number} The cell width
+ */
+const getCellWidth = () => getBoardWidth() / COLUMN_COUNT;
 
 /**
  * Adds the click handler function
@@ -21,7 +54,7 @@ const {
  * @returns {undefined} This function doesn't return anything.
  */
 const addClickHandler = (clickHandler) => {
-    boardCanvas.addEventListener("click", clickHandler);
+    getBoardCanvas().addEventListener("click", clickHandler);
 };
 
 /**
@@ -29,7 +62,22 @@ const addClickHandler = (clickHandler) => {
  * @returns {undefined} This function doesn't return anything
  */
 const removeClickHandler = (clickHandler) => {
-    boardCanvas.removeEventListener("click", clickHandler);
+    getBoardCanvas().removeEventListener("click", clickHandler);
+};
+
+/**
+ * Returns the location of the click in row and column indices
+ * @param {Event} clickEvent The click event data
+ * @returns {Object} An object cointaining the row and column index.
+ */
+const getClickLocation = (clickEvent) => {
+    const canvasRect = getBoardCanvas().getBoundingClientRect();
+    const left = clickEvent.pageX - canvasRect.left;
+    const top = clickEvent.pageY - canvasRect.top;
+    const row = Math.floor(top / getCellHeight()) + 1;
+    const col = Math.floor(left / getCellWidth()) + 1;
+
+    return { row, col };
 };
 
 const listenToClick = () => {
@@ -130,35 +178,11 @@ const disableThrowButton = () => document.querySelector("#throwDice").setAttribu
 const enableThrowButton = () => document.querySelector("#throwDice").removeAttribute("disabled");
 
 /**
- * Gets the cell height
- * @returns {Number} The cell height
- */
-const getCellHeight = () => BOARD_HEIGHT / ROW_COUNT;
-
-/**
- * Gets the cell width
- * @returns {Number} The cell width
- */
-const getCellWidth = () => BOARD_WIDTH / COLUMN_COUNT;
-
-/**
  * This function returns the context of the given context
  * @param {HTMLCanvasElement} targetCanvas The canvas to get the context for.
  * @returns {CanvasRenderingContext2D} The canvas rendering context.
  */
 const getContext = targetCanvas => targetCanvas.getContext("2d");
-
-/**
- * This function returns the dice canvas
- * @returns {HTMLCanvasElement} The dice canvas.
- */
-const getDiceCanvas = () => diceCanvas;
-
-/**
- * This function returns the board dice canvas
- * @returns {HTMLCanvasElement} The board canvas.
- */
-const getBoardCanvas = () => boardCanvas;
 
 /**
  * Gets an unique pseudorandom identifier string
@@ -183,21 +207,6 @@ const getCellColor = cellType => colors.CellFillColorMap[cellType];
 const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
 
 /**
- * Returns the location of the click in row and column indices
- * @param {Event} clickEvent The click event data
- * @returns {Object} An object cointaining the row and column index.
- */
-const getClickLocation = (clickEvent) => {
-    const canvasRect = getBoardCanvas().getBoundingClientRect();
-    const left = clickEvent.pageX - canvasRect.left;
-    const top = clickEvent.pageY - canvasRect.top;
-    const row = Math.floor(top / getCellHeight()) + 1;
-    const col = Math.floor(left / getCellWidth()) + 1;
-
-    return { row, col };
-};
-
-/**
  * Gets a random dice value between and including 1 and 6
  * @returns {Number} A number between and including 1 and 6
  */
@@ -209,6 +218,8 @@ export {
     disableThrowButton,
     enableThrowButton,
     getBoardCanvas,
+    getBoardHeight,
+    getBoardWidth,
     getCellColor,
     getCellHeight,
     getCellWidth,
