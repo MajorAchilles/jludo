@@ -188,8 +188,9 @@ const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
  * @returns {Object} An object cointaining the row and column index.
  */
 const getClickLocation = (clickEvent) => {
-    const left = clickEvent.pageX - getBoardCanvas().offsetLeft;
-    const top = clickEvent.pageY - getBoardCanvas().offsetTop;
+    const canvasRect = getBoardCanvas().getBoundingClientRect();
+    const left = clickEvent.pageX - canvasRect.left;
+    const top = clickEvent.pageY - canvasRect.top;
     const row = Math.floor(top / getCellHeight()) + 1;
     const col = Math.floor(left / getCellWidth()) + 1;
 

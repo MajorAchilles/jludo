@@ -27,9 +27,16 @@
     <link rel="shortcut icon" type="image/png" href="./favicon.png"/>
 </head>
 <body>
+    <div class="hiddenResources">
+        <img src="./static_resources/images/safestar.png" id="safeStar">
+        <img src="static_resources/images/background.jpg" id="background">
+    </div>
+    <div class="container">
+        <h3 class="section-heading">J LUDO</h3>
+        <p class="section-description">Skeleton images sit easily in grid with .u-max-full-width class. I suggest exploring solution to serving different images based on device size.</p>
         <div class="background">
             <div class="boardContainer">
-                <canvas class="console board" height="1000" width="1000"></canvas>
+                <canvas class="console board" height="800" width="800"></canvas>
             </div>
         </div>
         <div class="diceDisplay">
@@ -39,10 +46,7 @@
         </div>
         <div class="playerName"></div>
         <button id="throwDice" value="CLICK ME" onclick="throwDice();" style="font-size: 30px">THROW DICE</button>
-        <div class="hiddenResources">
-            <img src="./static_resources/images/safestar.png" id="safeStar">
-            <img src="static_resources/images/background.jpg" id="background">
-        </div>
+    </div>
 </body>
 <script src="./dist/bundle.js"></script>
 </html>
