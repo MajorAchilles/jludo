@@ -1,30 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
-        <title>J Ludo</title>
-    </head>
-    <body style="font-size: 30px">
-            <div class="background">
-                <div class="boardContainer">
-                    <canvas class="console board" height="1000" width="1000"></canvas>
-                </div>
+<head>
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>J Ludo</title>
+    <meta name="description" content="">
+    <meta name="author" content="Amlanjyoti Saikia">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="./static_resources/css/normalize.css">
+    <link rel="stylesheet" href="./static_resources/css/skeleton.css">
+    <link rel="stylesheet" href="./static_resources/css/index.css">
+
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="shortcut icon" type="image/png" href="./favicon.png"/>
+</head>
+<body>
+        <div class="background">
+            <div class="boardContainer">
+                <canvas class="console board" height="1000" width="1000"></canvas>
             </div>
-            <div class="diceDisplay">
-                <div class="boardContainer">
-                    <canvas class="console dice" height="100" width="100"></canvas>
-                </div>
+        </div>
+        <div class="diceDisplay">
+            <div class="boardContainer">
+                <canvas class="console dice" height="100" width="100"></canvas>
             </div>
-            <div class="playerName"></div>
-            <button id="throwDice" value="CLICK ME" onclick="throwDice();" style="font-size: 30px">THROW DICE</button>
-            <link rel="stylesheet" href="index.css">
-            <div class="hiddenResources">
-                <img src="static_resources/safestar.png" id="safeStar">
-                <img src="static_resources/background.jpg" id="background">
-            </div>
-    </body>
-    <script src="dist/bundle.js"></script>
+        </div>
+        <div class="playerName"></div>
+        <button id="throwDice" value="CLICK ME" onclick="throwDice();" style="font-size: 30px">THROW DICE</button>
+        <div class="hiddenResources">
+            <img src="./static_resources/images/safestar.png" id="safeStar">
+            <img src="static_resources/images/background.jpg" id="background">
+        </div>
+</body>
+<script src="./dist/bundle.js"></script>
 </html>
