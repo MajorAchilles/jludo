@@ -8,10 +8,9 @@
     },
     "scripts": {
         "lint": "eslint src",
-        "test": "exit 0",
         "start": "http-server",
         "start:dev": "http-server -p 80",
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "echo \"Error: no test specified\" && exit 0",
         "build": "webpack --mode production",
         "build:dev": "webpack --mode development",
         "build:cd": "nodemon --watch src --exec npm run build:deploy",
