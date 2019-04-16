@@ -17,7 +17,8 @@ import {
     listenToClick,
     getTrackIndexByLocation,
     getBoardHeight,
-    getBoardWidth
+    getBoardWidth,
+    getCoinColor
 } from "../lib/utils";
 import { generateTrack } from "../state";
 
@@ -106,9 +107,8 @@ export default class Game {
         this.board = new Board(this.boardCanvas, getBoardWidth(), getBoardHeight());
         this.dice = new Dice(getDiceCanvas());
         this.playerCoins = generatePlayerCoins(this.players, boardCanvas);
-        this.playerNameDiv = document.querySelector(".playerName");
+        this.playerNameDiv = document.querySelector("#throwDice");
         this.track = generateTrack();
-        this.reRenderBoard = true;
     }
 
     /**
@@ -134,18 +134,16 @@ export default class Game {
     /**
      * @inheritdoc
      */
-    render(reRenderBoard = true) {
-        this.playerNameDiv.textContent = [
-            "Current player: Player",
-            this.currentPlayerIndex + 1,
-            `(${this.getCurrentPlayer()})`
-        ].join(" ");
-
-        if (reRenderBoard) {
-            this.board.draw();
-        }
+    render() {
+        this.playerNameDiv.style.color = getCoinColor(this.getCurrentPlayer());
+        this.board.draw();
         this.dice.draw();
-        Object.keys(this.playerCoins).forEach(player => this.playerCoins[player].forEach(coin => coin.draw()));
+        Object
+            .keys(this.playerCoins).
+            forEach(
+                player => this.playerCoins[player]
+                    .forEach(coin => coin.draw())
+            );
     }
 
     /**
@@ -187,7 +185,6 @@ export default class Game {
                     const lastLocation = nextTrackSegment.pop();
                     targetCoin.move(lastLocation.row, lastLocation.col);
                 }
-                this.reRenderBoard = true;
                 this.setNextPlayer();
                 enableThrowButton();
                 this.render();
