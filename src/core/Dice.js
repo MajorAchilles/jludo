@@ -34,6 +34,7 @@ export default class Dice extends GameObject {
      */
     throw() {
         this.setDiceFace(getDiceValue());
+        return this.getDiceFace();
     }
 
     /**

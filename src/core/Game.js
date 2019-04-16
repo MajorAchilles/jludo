@@ -17,7 +17,7 @@ import {
     getCellWidth,
     disableThrowButton,
     enableThrowButton,
-    listenToClick,
+    listenToClick as getCoinSelection,
     getTrackIndexByLocation,
     getBoardHeight,
     getBoardWidth,
@@ -33,6 +33,11 @@ const defaultGameOptions = {
 
 const defaultPlayers = [CoinType.RED, CoinType.GREEN, CoinType.YELLOW, CoinType.BLUE];
 
+const INPUT_TYPES = {
+    DICE: "Game::InputType::Dice",
+    COIN_SELECTION: "Game::InputType::CoinSelection"
+};
+
 export default class Game {
     constructor(boardCanvas, players, gameOptions) {
         this.boardCanvas = boardCanvas;
@@ -42,10 +47,14 @@ export default class Game {
         this.board = new Board(this.boardCanvas, getBoardWidth(), getBoardHeight());
         this.dice = new Dice(getDiceCanvas());
         this.playerCoins = generatePlayerCoins(this.players, boardCanvas);
+        this.playableCells = [];
         this.playerNameDiv = document.querySelector("#throwDice");
         this.track = generateTrack();
+        this.currentInputType = INPUT_TYPES.DICE;
+        this.runLoop = true;
+        this.startGameLoop();1
     }
-
+    
     /**
      * Sets the current player to the next player in order of play.
      * @returns {undefined} This function doesn't return anything
@@ -67,46 +76,75 @@ export default class Game {
     }
 
     /**
-     * @inheritdoc
+     * Starts the game loop
+     * @returns {Undefined} This function doesn't return anything
      */
-    render() {
-        this.playerNameDiv.style.color = getCoinColor(this.getCurrentPlayer());
-        this.board.draw();
-        this.dice.draw();
-        Object
-            .keys(this.playerCoins).
-            forEach(
-                player => this.playerCoins[player]
-                    .forEach(coin => coin.draw())
-            );
+    async startGameLoop() {
+        while(this.runLoop) {
+            const input = await this.getInput();
+            this.currentInputType = await this.updateState(input);
+            await this.render();
+        }
     }
 
     /**
-     * Throws the dice
-     * @returns {undefined} This function doesn't return anything.
+     * Gets the input from the user
+     * @returns {Promise<Number|Array<Object>>} This function returns a promise that resolve once the input is received from the user.
      */
-    throwDice() {
-        const currentPlayer = this.getCurrentPlayer();
-        this.dice.throw();
-        this.render();
+    getInput() {
+        if (this.currentInputType === INPUT_TYPES.DICE) {
+            return this.getDiceValue();
+        } else {
+            return getCoinSelection();
+        }
+    }
 
-        const playableCoins = getPlayableCoins(currentPlayer, this.playerCoins, this.track, this.dice.getDiceFace());
+    /**
+     * Gets the value of the thrown dice.
+     * @returns {Promise<Number>} The value of the dice after it is thrown.
+     */
+    getDiceValue() {
+        return new Promise((resolve) => {
+            this.throwDice = () => {
+                resolve(this.dice.throw());
+            }
+        });
+    }
 
-        if (playableCoins.length) {
-            // Show selectable windows
-            this.renderSelectionWindows(playableCoins.map((coin) => {
-                return {
-                    row: coin.row,
-                    col: coin.col
-                };
-            }));
-
-            // Remove throw button
-            disableThrowButton();
-            listenToClick().then((location) => {
+    /**
+     * Updates the current game state
+     * @param {Number|Object} input The input from the user, either a dice value or a value with selection row and column
+     * @returns {Promise<INPUT_TYPES>} Returns the input type to be used for the next game loop.
+     */
+    updateState(input) {
+        return new Promise((resolve) => {
+            const currentPlayer = this.getCurrentPlayer();
+            this.playableCells = [];
+    
+            if (this.currentInputType === INPUT_TYPES.DICE) {
+                const playableCoins = getPlayableCoins(currentPlayer, this.playerCoins, this.track, this.dice.getDiceFace());
+    
+                if (playableCoins.length) {
+                    // Show selectable windows
+                    this.playableCells = playableCoins.map((coin) => {
+                        return {
+                            row: coin.row,
+                            col: coin.col
+                        };
+                    });
+    
+                    // Remove throw button
+                    disableThrowButton();
+                    resolve(INPUT_TYPES.COIN_SELECTION);
+                } else {
+                    window.alert("Sorry! No playable coins for you!"); // eslint-disable-line no-alert
+                    this.setNextPlayer();
+                    resolve(INPUT_TYPES.DICE);
+                }
+            } else {
                 const targetCoin = this.playerCoins[currentPlayer]
-                    .filter(coin => coin.row === location.row && coin.col === location.col)[0];
-
+                .filter(coin => coin.row === input.row && coin.col === input.col)[0];
+    
                 if (targetCoin.row === targetCoin.startRow && targetCoin.col === targetCoin.startCol) {
                     const trackStartPosition = playerTrackStartPositions[currentPlayer];
                     targetCoin.move(trackStartPosition.row, trackStartPosition.col);
@@ -122,13 +160,29 @@ export default class Game {
                 }
                 this.setNextPlayer();
                 enableThrowButton();
-                this.render();
-            });
-        } else {
-            window.alert("Sorry! No playable coins for you!"); // eslint-disable-line no-alert
-            this.setNextPlayer();
-            this.render();
-        }
+                resolve(INPUT_TYPES.DICE);
+            }
+        });
+    }
+
+    /**
+     * Renders the GameObjects of the game.
+     * @returns {Undefined} This function doesn't return anything.
+     */
+    render() {
+        return new Promise((resolve) => {
+            this.playerNameDiv.style.color = getCoinColor(this.getCurrentPlayer());
+            this.board.draw();
+            this.dice.draw();
+            Object
+                .keys(this.playerCoins).
+                forEach(
+                    player => this.playerCoins[player]
+                        .forEach(coin => coin.draw())
+                );
+            this.renderSelectionWindows(this.playableCells);
+            resolve(true);
+        });
     }
 
     /**
@@ -137,6 +191,10 @@ export default class Game {
      * @returns {undefined} This function doesn't return anything.
      */
     renderSelectionWindows(cells) {
+        if (!cells.length) {
+            return;
+        }
+
         const boardContext = getContext(this.boardCanvas);
 
         const width = getCellWidth();
