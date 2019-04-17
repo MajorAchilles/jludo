@@ -52,9 +52,9 @@ export default class Game {
         this.track = generateTrack();
         this.currentInputType = INPUT_TYPES.DICE;
         this.runLoop = true;
-        this.startGameLoop();1
+        this.startGameLoop();
     }
-    
+
     /**
      * Sets the current player to the next player in order of play.
      * @returns {undefined} This function doesn't return anything
@@ -80,11 +80,13 @@ export default class Game {
      * @returns {Undefined} This function doesn't return anything
      */
     async startGameLoop() {
-        while(this.runLoop) {
+        /* eslint-disable no-await-in-loop */
+        while (this.runLoop) {
             const input = await this.getInput();
             this.currentInputType = await this.updateState(input);
             await this.render();
         }
+        /* eslint-enable no-await-in-loop */
     }
 
     /**
@@ -94,9 +96,8 @@ export default class Game {
     getInput() {
         if (this.currentInputType === INPUT_TYPES.DICE) {
             return this.getDiceValue();
-        } else {
-            return getCoinSelection();
         }
+        return getCoinSelection();
     }
 
     /**
@@ -107,7 +108,7 @@ export default class Game {
         return new Promise((resolve) => {
             this.throwDice = () => {
                 resolve(this.dice.throw());
-            }
+            };
         });
     }
 
@@ -120,10 +121,15 @@ export default class Game {
         return new Promise((resolve) => {
             const currentPlayer = this.getCurrentPlayer();
             this.playableCells = [];
-    
+
             if (this.currentInputType === INPUT_TYPES.DICE) {
-                const playableCoins = getPlayableCoins(currentPlayer, this.playerCoins, this.track, this.dice.getDiceFace());
-    
+                const playableCoins = getPlayableCoins(
+                    currentPlayer,
+                    this.playerCoins,
+                    this.track,
+                    this.dice.getDiceFace()
+                );
+
                 if (playableCoins.length) {
                     // Show selectable windows
                     this.playableCells = playableCoins.map((coin) => {
@@ -132,7 +138,7 @@ export default class Game {
                             col: coin.col
                         };
                     });
-    
+
                     // Remove throw button
                     disableThrowButton();
                     resolve(INPUT_TYPES.COIN_SELECTION);
@@ -143,8 +149,8 @@ export default class Game {
                 }
             } else {
                 const targetCoin = this.playerCoins[currentPlayer]
-                .filter(coin => coin.row === input.row && coin.col === input.col)[0];
-    
+                    .filter(coin => coin.row === input.row && coin.col === input.col)[0];
+
                 if (targetCoin.row === targetCoin.startRow && targetCoin.col === targetCoin.startCol) {
                     const trackStartPosition = playerTrackStartPositions[currentPlayer];
                     targetCoin.move(trackStartPosition.row, trackStartPosition.col);
@@ -175,8 +181,8 @@ export default class Game {
             this.board.draw();
             this.dice.draw();
             Object
-                .keys(this.playerCoins).
-                forEach(
+                .keys(this.playerCoins)
+                .forEach(
                     player => this.playerCoins[player]
                         .forEach(coin => coin.draw())
                 );

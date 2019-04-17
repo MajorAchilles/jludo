@@ -1,10 +1,9 @@
 
-/* globals document, window */
 import { playerStartPositions } from "../constants";
 import Coin from "./Coin";
 import {
     getNextTrackSegment,
-    getTrackIndexByLocation,
+    getTrackIndexByLocation
 } from "../lib/utils";
 
 /**
