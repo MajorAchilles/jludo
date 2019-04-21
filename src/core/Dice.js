@@ -1,14 +1,16 @@
-/* globals */
+/* globals document */
 import GameObject from "./GameObject";
 import { getDiceValue } from "../lib/utils";
+import { timing } from "../constants";
 
-const RED = "#FF0000";
-const BLACK = "#000000";
+
+const DICE_WIDTH = 98;
 
 export default class Dice extends GameObject {
     constructor(canvas) {
         super(canvas);
         this.diceFace = 6;
+        this.diceSprite = document.getElementById("diceSprite")
     }
 
     /**
@@ -47,10 +49,33 @@ export default class Dice extends GameObject {
     /**
      * @inherit
      */
-    render() {
-        const context = this.getContext();
-        context.font = "40px Arial";
-        context.fillStyle = this.diceFace === 6 ? RED : BLACK;
-        context.fillText(this.diceFace, 40, 60);
+    async render() {
+        return new Promise((resolve) => {
+            const context = this.getContext();
+
+            const frameInterval = setInterval(() => {
+                this.drawDiceSprite(context, getDiceValue());
+            }, timing.TIME_PER_FRAME);
+
+            setTimeout(() => {
+                clearInterval(frameInterval);
+                this.drawDiceSprite(context, this.diceFace);
+                setTimeout(resolve, 200);
+            }, 1000);
+        });
+    }
+
+    drawDiceSprite(context, diceValue) {
+        context.drawImage(
+            this.diceSprite,
+            (diceValue - 1) * DICE_WIDTH,
+            0,
+            DICE_WIDTH,
+            DICE_WIDTH,
+            0,
+            0,
+            DICE_WIDTH,
+            DICE_WIDTH
+        );
     }
 }
