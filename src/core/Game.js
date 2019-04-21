@@ -83,6 +83,9 @@ export default class Game {
         /* eslint-disable no-await-in-loop */
         while (this.runLoop) {
             const input = await this.getInput();
+            if (this.currentInputType === INPUT_TYPES.DICE) {
+                await this.dice.render();
+            }
             this.currentInputType = await this.updateState(input);
             await this.render();
         }
@@ -179,7 +182,7 @@ export default class Game {
         return new Promise((resolve) => {
             this.playerNameDiv.style.color = getCoinColor(this.getCurrentPlayer());
             this.board.draw();
-            this.dice.draw();
+            // this.dice.draw();
             Object
                 .keys(this.playerCoins)
                 .forEach(
