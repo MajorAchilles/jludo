@@ -6,11 +6,15 @@ import Coin from "./core/Coin";
 import Board from "./core/Board";
 import {
     CoinType,
-    timing,
-    dimensions
+    timing
 } from "./constants";
 import Game from "./core/Game";
-import { getBoardCanvas } from "./lib/utils";
+import {
+    getBoardCanvas,
+    getBoardWidth,
+    getBoardHeight,
+    showToast
+} from "./lib/utils";
 
 let game;
 const boardCanvas = getBoardCanvas();
@@ -24,7 +28,7 @@ window.throwDice = () => {
 };
 
 const test = () => {
-    const board = new Board(boardCanvas, dimensions.BOARD_WIDTH, dimensions.BOARD_HEIGHT);
+    const board = new Board(boardCanvas, getBoardWidth(), getBoardHeight());
 
     const testCoin = new Coin(boardCanvas, CoinType.YELLOW);
     let index = 0;
@@ -46,6 +50,7 @@ const test = () => {
 
 window.onload = () => {
     const testInterval = test();
+    showToast("Welcome to JLudo", 1000);
     setTimeout(() => {
         clearInterval(testInterval);
         clearCanvas(boardCanvas);

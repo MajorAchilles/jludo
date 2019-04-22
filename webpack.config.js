@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-    entry: "./src/index.js",
+    entry: ["babel-regenerator-runtime", "./src/index.js"],
     module: {
         rules: [
             {

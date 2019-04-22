@@ -1,5 +1,6 @@
-import { getUUID, getContext } from "../lib/utils";
-import { dimensions } from "../constants";
+import {
+    getUUID, getContext, getBoardHeight, getBoardWidth
+} from "../lib/utils";
 
 export default class GameObject {
     /**
@@ -59,7 +60,7 @@ export default class GameObject {
      */
     draw() {
         this.preRender();
-        if (this.top <= dimensions.BOARD_HEIGHT && this.left <= dimensions.BOARD_WIDTH) {
+        if (this.top <= getBoardHeight() && this.left <= getBoardWidth()) {
             this.render();
         }
         this.postRender();

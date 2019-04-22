@@ -59,15 +59,19 @@ export default class Coin extends GameObject {
      * @inherit
      */
     render() {
+        const cellHeight = getCellHeight();
+        const cellWidth = getCellWidth();
+
         const context = this.getContext();
         context.fillStyle = this.coinColor;
         context.strokeStyle = colors.BoundaryColor;
+
         context.beginPath();
         context.ellipse(
             this.left,
             this.top,
-            (getCellHeight() / 2) - 5,
-            (getCellWidth() / 2) - 5,
+            (cellHeight / 2) - (cellHeight * 0.1),
+            (cellWidth / 2) - (cellWidth * 0.1),
             0,
             0,
             2 * Math.PI,
@@ -76,12 +80,13 @@ export default class Coin extends GameObject {
         context.fill();
         context.lineWidth = 2;
         context.stroke();
+
         context.beginPath();
         context.ellipse(
             this.left,
             this.top,
-            (getCellHeight() / 3) - 5,
-            (getCellWidth() / 3) - 5,
+            (cellHeight / 3) - (cellHeight * 0.1),
+            (cellWidth / 3) - (cellHeight * 0.1),
             0,
             0,
             2 * Math.PI,
