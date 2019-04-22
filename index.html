@@ -35,18 +35,17 @@
     <div class="container">
         <h3 class="section-heading">J LUDO</h3>
         <p class="section-description">Placeholder text. Replace with instructions, maybe?</p>
-        <div class="background">
-            <div class="boardContainer container">
+        <div class="row">
+            <div class="boardContainer u-pull-left margin-right">
                 <canvas class="console board" height="500" width="500"></canvas>
             </div>
-        </div>
-        <div class="diceDisplay">
             <div class="boardContainer">
                 <canvas class="console dice" height="98" width="98"></canvas>
             </div>
         </div>
-        <div class="playerName"></div>
-        <button id="throwDice" value="CLICK ME" onclick="throwDice();" style="font-size: 30px">THROW DICE</button>
+        <div class="row">
+            <button class="twelve columns" id="throwDice" value="CLICK ME" onclick="throwDice();" style="font-size: 30px">THROW DICE</button>
+        </div>
     </div>
 </body>
 <script src="./dist/bundle.js"></script>
