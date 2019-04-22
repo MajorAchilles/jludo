@@ -39,6 +39,39 @@ const INPUT_TYPES = {
     COIN_SELECTION: "Game::InputType::CoinSelection"
 };
 
+/**
+ * Returns the state object data structure
+ * @returns {Object} The state object data structure
+ */
+const getStateObject = () => {
+    return {
+        nextInputType: "",
+        hasMovement: false,
+        hasSelection: false,
+        hasToast: true,
+        changePlayer: false,
+        selection: {
+            selectableCells: []
+        },
+        toast: {
+            message: "",
+            timeout: 0
+        },
+        movement: {
+            coin: null,
+            currentPosition: {
+                row: 0,
+                col: 0
+            },
+            nextPosition: {
+                row: 0,
+                col: 0
+            },
+            trackSegment: []
+        }
+    };
+};
+
 export default class Game {
     constructor(boardCanvas, players, gameOptions) {
         this.boardCanvas = boardCanvas;
@@ -48,11 +81,11 @@ export default class Game {
         this.board = new Board(this.boardCanvas, getBoardWidth(), getBoardHeight());
         this.dice = new Dice(getDiceCanvas());
         this.playerCoins = generatePlayerCoins(this.players, boardCanvas);
-        this.playableCells = [];
         this.playerNameDiv = document.querySelector("#throwDice");
         this.track = generateTrack();
-        this.currentInputType = INPUT_TYPES.DICE;
         this.runLoop = true;
+        this.state = getStateObject();
+        this.state.nextInputType = INPUT_TYPES.DICE;
         this.startGameLoop();
     }
 
@@ -84,10 +117,30 @@ export default class Game {
         /* eslint-disable no-await-in-loop */
         while (this.runLoop) {
             const input = await this.getInput();
-            if (this.currentInputType === INPUT_TYPES.DICE) {
+            if (this.state.nextInputType === INPUT_TYPES.DICE) {
                 await this.dice.render();
             }
-            this.currentInputType = await this.updateState(input);
+            const nextState = await this.getNextState(input);
+
+            if (nextState.nextInputType === INPUT_TYPES.COIN_SELECTION) {
+                disableThrowButton();
+            } else {
+                enableThrowButton();
+            }
+
+            if (nextState.changePlayer) {
+                this.setNextPlayer();
+            }
+
+            if (nextState.hasToast) {
+                showToast(nextState.toast.message, nextState.toast.timeout);
+            }
+
+            if (nextState.hasMovement) {
+                nextState.movement.coin.move(nextState.movement.nextPosition.row, nextState.movement.nextPosition.col);
+            }
+            this.state = nextState;
+
             await this.render();
         }
         /* eslint-enable no-await-in-loop */
@@ -98,7 +151,7 @@ export default class Game {
      * @returns {Promise<Number|Array<Object>>} This function returns a promise that resolve once the input is received from the user.
      */
     getInput() {
-        if (this.currentInputType === INPUT_TYPES.DICE) {
+        if (this.state.nextInputType === INPUT_TYPES.DICE) {
             return this.getDiceValue();
         }
         return this.getCoinSelection();
@@ -140,12 +193,12 @@ export default class Game {
      * @param {Number|Object} targetCoin The input from the user, either a dice value or a value with selection row and column
      * @returns {Promise<INPUT_TYPES>} Returns the input type to be used for the next game loop.
      */
-    updateState(targetCoin) {
+    getNextState(targetCoin) {
+        const stateObject = getStateObject();
         return new Promise((resolve) => {
             const currentPlayer = this.getCurrentPlayer();
-            this.playableCells = [];
 
-            if (this.currentInputType === INPUT_TYPES.DICE) {
+            if (this.state.nextInputType === INPUT_TYPES.DICE) {
                 const playableCoins = getPlayableCoins(
                     currentPlayer,
                     this.playerCoins,
@@ -154,39 +207,51 @@ export default class Game {
                 );
 
                 if (playableCoins.length) {
-                    // Show selectable windows
-                    this.playableCells = playableCoins.map((coin) => {
+                    stateObject.nextInputType = INPUT_TYPES.COIN_SELECTION;
+                    stateObject.hasSelection = true;
+                    stateObject.selection.selectableCells = playableCoins.map((coin) => {
                         return {
                             row: coin.row,
                             col: coin.col
                         };
                     });
-
-                    // Remove throw button
-                    disableThrowButton();
-                    resolve(INPUT_TYPES.COIN_SELECTION);
+                    resolve(stateObject);
                 } else {
-                    showToast("Sorry! No playable coins for you!", 2000);
-                    this.setNextPlayer();
-                    resolve(INPUT_TYPES.DICE);
+                    stateObject.nextInputType = INPUT_TYPES.DICE;
+                    stateObject.hasToast = true;
+                    stateObject.toast.message = "Sorry! No playable coins for you!";
+                    stateObject.toast.timeout = 2000;
+                    stateObject.changePlayer = true;
+                    resolve(stateObject);
                 }
             } else {
+                stateObject.nextInputType = INPUT_TYPES.DICE;
+                stateObject.changePlayer = true;
+                stateObject.hasMovement = true;
+                stateObject.movement.coin = targetCoin;
+                stateObject.movement.currentPosition.row = targetCoin.row;
+                stateObject.movement.currentPosition.col = targetCoin.col;
+
+                // If the target coin is still IN the starting square
                 if (targetCoin.row === targetCoin.startRow && targetCoin.col === targetCoin.startCol) {
                     const trackStartPosition = playerTrackStartPositions[currentPlayer];
-                    targetCoin.move(trackStartPosition.row, trackStartPosition.col);
+                    // Move it to the player's starting position on the track.
+                    stateObject.movement.nextPosition.row = trackStartPosition.row;
+                    stateObject.movement.nextPosition.col = trackStartPosition.col;
                 } else {
+                    // Otherwise, get the next track segment
                     const nextTrackSegment = getNextTrackSegment(
                         this.track,
                         getTrackIndexByLocation(this.track, targetCoin.row, targetCoin.col),
                         this.dice.getDiceFace(),
                         currentPlayer
                     );
-                    const lastLocation = nextTrackSegment.pop();
-                    targetCoin.move(lastLocation.row, lastLocation.col);
+                    // Move to the last position of the track segment.
+                    const lastLocation = nextTrackSegment[nextTrackSegment.length - 1];
+                    stateObject.movement.nextPosition.row = lastLocation.row;
+                    stateObject.movement.nextPosition.col = lastLocation.col;
                 }
-                this.setNextPlayer();
-                enableThrowButton();
-                resolve(INPUT_TYPES.DICE);
+                resolve(stateObject);
             }
         });
     }
@@ -206,7 +271,9 @@ export default class Game {
                     player => this.playerCoins[player]
                         .forEach(coin => coin.draw())
                 );
-            this.renderSelectionWindows(this.playableCells);
+            if (this.state.hasSelection) {
+                this.renderSelectionWindows(this.state.selection.selectableCells);
+            }
             resolve(true);
         });
     }
