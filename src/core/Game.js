@@ -17,7 +17,7 @@ import {
     getCellWidth,
     disableThrowButton,
     enableThrowButton,
-    listenToClick as getCoinSelection,
+    listenToClick,
     getTrackIndexByLocation,
     getBoardHeight,
     getBoardWidth,
@@ -101,7 +101,26 @@ export default class Game {
         if (this.currentInputType === INPUT_TYPES.DICE) {
             return this.getDiceValue();
         }
-        return getCoinSelection();
+        return this.getCoinSelection();
+    }
+
+    /**
+     * Gets the selected coin.
+     * @returns {Coin} The coin instance selected by the player.
+     */
+    async getCoinSelection() {
+        let targetCoin;
+        let runLoop = true;
+        while (runLoop) {
+            const input = await listenToClick(); // eslint-disable-line no-await-in-loop
+            const currentPlayerCoins = this.playerCoins[this.getCurrentPlayer()];
+            // eslint-disable-next-line prefer-destructuring
+            targetCoin = currentPlayerCoins
+                .filter(coin => coin.row === input.row && coin.col === input.col)[0];
+            runLoop = !targetCoin;
+        }
+
+        return targetCoin;
     }
 
     /**
@@ -118,10 +137,10 @@ export default class Game {
 
     /**
      * Updates the current game state
-     * @param {Number|Object} input The input from the user, either a dice value or a value with selection row and column
+     * @param {Number|Object} targetCoin The input from the user, either a dice value or a value with selection row and column
      * @returns {Promise<INPUT_TYPES>} Returns the input type to be used for the next game loop.
      */
-    updateState(input) {
+    updateState(targetCoin) {
         return new Promise((resolve) => {
             const currentPlayer = this.getCurrentPlayer();
             this.playableCells = [];
@@ -152,9 +171,6 @@ export default class Game {
                     resolve(INPUT_TYPES.DICE);
                 }
             } else {
-                const targetCoin = this.playerCoins[currentPlayer]
-                    .filter(coin => coin.row === input.row && coin.col === input.col)[0];
-
                 if (targetCoin.row === targetCoin.startRow && targetCoin.col === targetCoin.startCol) {
                     const trackStartPosition = playerTrackStartPositions[currentPlayer];
                     targetCoin.move(trackStartPosition.row, trackStartPosition.col);
