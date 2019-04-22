@@ -9,7 +9,12 @@ import {
     timing
 } from "./constants";
 import Game from "./core/Game";
-import { getBoardCanvas, getBoardWidth, getBoardHeight } from "./lib/utils";
+import {
+    getBoardCanvas,
+    getBoardWidth,
+    getBoardHeight,
+    showToast
+} from "./lib/utils";
 
 let game;
 const boardCanvas = getBoardCanvas();
@@ -45,6 +50,7 @@ const test = () => {
 
 window.onload = () => {
     const testInterval = test();
+    showToast("Welcome to JLudo", 1000);
     setTimeout(() => {
         clearInterval(testInterval);
         clearCanvas(boardCanvas);

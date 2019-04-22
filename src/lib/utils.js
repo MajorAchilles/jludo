@@ -212,6 +212,18 @@ const getCoinColor = coinType => colors.CoinFillColorMap[coinType];
  */
 const getDiceValue = () => Math.floor(Math.random() * 6) + 1;
 
+const showToast = (message, timeout = 3000) => {
+    const toastDiv = document.createElement("div");
+    toastDiv.innerText = message;
+    toastDiv.setAttribute("class", "toast show");
+    document.body.appendChild(toastDiv);
+
+    setTimeout(() => {
+        toastDiv.className = toastDiv.setAttribute("class", "toast");
+        document.body.removeChild(toastDiv);
+    }, timeout);
+};
+
 export {
     addClickHandler,
     canvasToImage,
@@ -233,5 +245,6 @@ export {
     getTrackIndexByLocation,
     getUUID,
     listenToClick,
-    removeClickHandler
+    removeClickHandler,
+    showToast
 };

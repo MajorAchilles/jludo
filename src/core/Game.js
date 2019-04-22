@@ -1,5 +1,5 @@
 
-/* globals document, window */
+/* globals document */
 import {
     CoinType, playerTrackStartPositions
 } from "../constants";
@@ -21,7 +21,8 @@ import {
     getTrackIndexByLocation,
     getBoardHeight,
     getBoardWidth,
-    getCoinColor
+    getCoinColor,
+    showToast
 } from "../lib/utils";
 import { generateTrack } from "../state";
 
@@ -146,7 +147,7 @@ export default class Game {
                     disableThrowButton();
                     resolve(INPUT_TYPES.COIN_SELECTION);
                 } else {
-                    window.alert("Sorry! No playable coins for you!"); // eslint-disable-line no-alert
+                    showToast("Sorry! No playable coins for you!", 2000);
                     this.setNextPlayer();
                     resolve(INPUT_TYPES.DICE);
                 }
