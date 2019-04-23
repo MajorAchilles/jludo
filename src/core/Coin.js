@@ -1,6 +1,6 @@
 import GameObject from "./GameObject";
 import { getCoinColor, getCellHeight, getCellWidth } from "../lib/utils";
-import { colors } from "../constants";
+import { colors, timing } from "../constants";
 
 export default class Coin extends GameObject {
     constructor(canvas, coinType, startRow, startCol) {
@@ -94,5 +94,34 @@ export default class Coin extends GameObject {
         );
         context.lineWidth = 1;
         context.stroke();
+    }
+
+    /* eslint-disable class-methods-use-this */
+
+    /**
+     * Animates the movement of the coins
+     * @param {Object} start The starting cell position
+     * @param {Object} end The ending cell position
+     */
+    async animateMove(start, end, image) {
+        const sourceImage = document.createElement("img");
+        sourceImage.src = image;
+        return new Promise((resolve) => {
+            const context = this.getContext();
+            let startRow = start.row;
+            let startCol = start.col;
+
+
+            const renderInterval = setInterval(() => {
+                this.move(startRow++, startCol++); // Improve this logic to use track segment OR starting position logic
+                context.drawImage(sourceImage, 0, 0);
+                this.render();
+
+                if (this.row === end.row && this.col === end.col) {
+                    clearInterval(renderInterval);
+                    resolve(true);
+                }
+            }, timing.TIME_PER_FRAME);
+        });
     }
 }

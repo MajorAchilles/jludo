@@ -22,7 +22,8 @@ import {
     getBoardHeight,
     getBoardWidth,
     getCoinColor,
-    showToast
+    showToast,
+    getBoardCanvas
 } from "../lib/utils";
 import { generateTrack } from "../state";
 
@@ -317,8 +318,22 @@ export default class Game {
                     .keys(this.playerCoins)
                     .forEach(
                         player => this.playerCoins[player]
+                            .filter(coin => !(
+                                renderOptions.animateCoin
+                                && coin === renderOptions.coinAnimationData.coin
+                            ))
                             .forEach(coin => coin.draw())
                     );
+            }
+
+            if (renderOptions.animateCoin && renderOptions.coinAnimationData.coin) {
+                // Save current background to placeholder
+                document.getElementById("canvasPlaceholder").setAttribute("src", getBoardCanvas().toDataURL());
+                await renderOptions.coinAnimationData.coin.animateMove(
+                    renderOptions.coinAnimationData.currentPosition,
+                    renderOptions.coinAnimationData.nextPosition,
+                    this.boardCanvas.toDataURL()
+                );
             }
 
             if (renderOptions.selection) {
