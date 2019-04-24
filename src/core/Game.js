@@ -255,6 +255,7 @@ export default class Game {
             const lastLocation = nextTrackSegment[nextTrackSegment.length - 1];
             stateObject.movement.nextPosition.row = lastLocation.row;
             stateObject.movement.nextPosition.col = lastLocation.col;
+            stateObject.movement.trackSegment = nextTrackSegment;
         }
         return stateObject;
     }
@@ -332,6 +333,7 @@ export default class Game {
                 await renderOptions.coinAnimationData.coin.animateMove(
                     renderOptions.coinAnimationData.currentPosition,
                     renderOptions.coinAnimationData.nextPosition,
+                    renderOptions.coinAnimationData.trackSegment,
                     this.boardCanvas.toDataURL()
                 );
             }
