@@ -20,7 +20,7 @@ let game;
 const boardCanvas = getBoardCanvas();
 const startGame = () => {
     game = new Game(boardCanvas);
-    game.render();
+    game.render({ board: true, coins: true });
 };
 
 window.throwDice = () => {
